@@ -1,13 +1,13 @@
-- [ip-project-server](#)
-        - [Installation](#)
-        - [Running](#)
-- [API](#)
-        - [/hello/:name/](#)
-        - [/register/](#)
-        - [/login/](#)
-
 # ip-project-server
 Server for Integrated Project, powered by Express.js and Redis
+
+* [ip-project-server](#ip-project-server)
+        * [Installation](#Installation)
+        * [Running](#Running)
+* [API](#API)
+        * [/hello/:name/](#/hello/:name/)
+        * [/register/](#/register/)
+        * [/login/](#/login/)
 
 ### Installation
 Instructions are for OSX El Capitan at time of writing.
