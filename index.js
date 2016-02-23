@@ -16,6 +16,7 @@ app.get('/hello/(:name)?', function (req, res) {
 app.all('/register', function(req, res) {
     var tmp_username = req.body.user || req.query.user;
     var tmp_password = req.body.password || req.query.password;
+    tmp_username = tmp_username.toLowerCase();
     var uquery       = 'user:' + tmp_username;
     var user_object  = {};
 
@@ -38,6 +39,7 @@ app.all('/register', function(req, res) {
 
 app.all('/login', function(req, res) {
     var username = req.body.user || req.query.user;
+    username = username.toLowerCase();
     var password = req.body.password || req.query.password;
     var auth_key = req.body.auth_key || req.query.auth_key;
     var uquery   = 'user:' + username;
