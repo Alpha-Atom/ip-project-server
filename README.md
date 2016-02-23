@@ -1,6 +1,23 @@
 # ip-project-server
 Server for Integrated Project, powered by Express.js and Redis
 
+### Installation
+Instructions are for OSX El Capitan at time of writing.
+
+First install the Redis server:
+```
+brew install redis
+```
+Then clone this repository:
+```
+git clone https://github.com/Alpha-Atom/ip-project-server.git
+```
+And finally, install the dependencies
+```
+npm install
+```
+
+### Running
 To run, first start Redis:
 ```
 redis-server
