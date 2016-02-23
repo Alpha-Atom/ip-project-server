@@ -55,7 +55,7 @@ The server will then respond with a JSON object that looks something like this:
 {
     "registered": 1, // Value is 1 or 0 based on whether registration was
     successful
-    "auth-key": $2a$10$.X9YrNyd2R7b2ycAumHn.ONiINs2bCkRDupugu6sjZkUkPmXSaSra, // Value is an authentication key to be used in API requests
+    "auth-key": "$2a$10$.X9YrNyd2R7b2ycAumHn.ONiINs2bCkRDupugu6sjZkUkPmXSaSra", // Value is an authentication key to be used in API requests
     "error": 0 // Error code, if an error occured. 0 indicates no error.
 }
 ```
@@ -77,7 +77,7 @@ will be returned:
 ```javascript
 {
     "logged_in": 1, // Value is 1 or 0 whether or not the login was successful
-    "auth-key": $2a$10$.X9YrNyd2R7b2ycAumHn.ONiINs2bCkRDupugu6sjZkUkPmXSaSra, // Only present if logged_in == 1, to be used in API requests
+    "auth-key": "$2a$10$.X9YrNyd2R7b2ycAumHn.ONiINs2bCkRDupugu6sjZkUkPmXSaSra", // Only present if logged_in == 1, to be used in API requests
     "error": 0 // Error code, if an error occured. 0 indicates no error.
 }
 ```
