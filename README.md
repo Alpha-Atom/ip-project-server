@@ -58,6 +58,6 @@ will be returned:
     "error": 0 // Error code, if an error occured. 0 indicates no error.
 }
 ```
-The error codes are as follows, 1 indicates the username could not be found, 2
-indicates that the password is invalid and 3 indicates the provided
+The error codes are as follows, `1` indicates the username could not be found,
+`2` indicates that the password is invalid and `3` indicates the provided
 authentication key was invalid.
