@@ -44,14 +44,14 @@ Returns "Hello :name!" or simply "Hello World!" if no name is present. :)
 ### /register/
 In order to register a new user account, a `POST` request should be sent, with
 the following data:
-```json
+```javascript
 {
     "user": desired_username_here,
     "password": desired_password_here
 }
 ```
 The server will then respond with a JSON object that looks something like this:
-```json
+```javascript
 {
     "registered": 1, // Value is 1 or 0 based on whether registration was
     successful
@@ -64,7 +64,7 @@ The value of the error code will be `1` if the username already exists.
 ### /login/
 In order to log into an account, or essentially request a new authentication
 token, a `POST` request should be sent with the following data:
-```json
+```javascript
 {
     "user": username_here,
     "password": password_here, // Optional field if auth-key is present
@@ -74,7 +74,7 @@ token, a `POST` request should be sent with the following data:
 Using the auth-key will reset and generate a new authentication key, whereas
 password will simply get the current auth-key. In either case the following data
 will be returned:
-```json
+```javascript
 {
     "logged_in": 1, // Value is 1 or 0 whether or not the login was successful
     "auth-key": $2a$10$.X9YrNyd2R7b2ycAumHn.ONiINs2bCkRDupugu6sjZkUkPmXSaSra, // Only present if logged_in == 1, to be used in API requests
