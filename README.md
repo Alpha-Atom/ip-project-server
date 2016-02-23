@@ -46,8 +46,8 @@ In order to register a new user account, a `POST` request should be sent, with
 the following data:
 ```javascript
 {
-    "user": desired_username_here,
-    "password": desired_password_here
+    "user": "FooBar", // Desired username goes here
+    "password": "hunter2" // Desired password goes here
 }
 ```
 The server will then respond with a JSON object that looks something like this:
@@ -65,9 +65,9 @@ In order to log into an account, or essentially request a new authentication
 token, a `POST` request should be sent with the following data:
 ```javascript
 {
-    "user": username_here,
-    "password": password_here, // Optional field if auth-key is present
-    "auth-key": auth_key_here // Optional field if password is present
+    "user": "FooBar", // Username goes here
+    "password": "hunter2", // Optional field if auth-key is present
+    "auth-key": "$2a$10$.X9YrNyd2R7b2ycAumHn.ONiINs2bCkRDupugu6sjZkUkPmXSaSra" // Optional field if password is present
 }
 ```
 Using the auth-key will reset and generate a new authentication key, whereas
