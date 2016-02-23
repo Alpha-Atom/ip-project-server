@@ -53,8 +53,7 @@ the following data:
 The server will then respond with a JSON object that looks something like this:
 ```javascript
 {
-    "registered": 1, // Value is 1 or 0 based on whether registration was
-    successful
+    "registered": 1, // Value is 1 or 0 based on whether registration was successful
     "auth-key": "$2a$10$.X9YrNyd2R7b2ycAumHn.ONiINs2bCkRDupugu6sjZkUkPmXSaSra", // Value is an authentication key to be used in API requests
     "error": 0 // Error code, if an error occured. 0 indicates no error.
 }
