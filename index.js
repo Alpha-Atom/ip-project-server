@@ -1,9 +1,13 @@
 var express = require('express');
+var https = require('https');
 var app = express();
 var bcrypt = require('bcrypt-nodejs');
 var Redis = require('ioredis');
 var redis = new Redis();
 var bodyParser = require('body-parser');
+var fs = require('fs');
+var p_key = fs.readFileSync( 'server.key' )
+var certi = fs.readFileSync( 'server.crt' );
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -91,8 +95,15 @@ app.all('/login', function(req, res) {
     });
 });
 
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+// app.listen(3000, function () {
+//     console.log('Example app listening on port 3000!');
+// });
+
+https.createServer({
+    key: p_key,
+    cert: certi
+}, app).listen(3000, function() {
+    console.log("App listening for HTTPS connections on port 3000!");
 });
 
 process.on('SIGINT', function() {
