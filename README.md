@@ -1,6 +1,8 @@
 # ip-project-server
 Server for Integrated Project, powered by Express.js and Redis, listens only on HTTPS now, currently using a self-signed cert, will have to play with trust authorities on the ionic side. Also at the moment server responds to `ALL` requests, cause it's easier to do testing with `GET`, will also set up unit tests in good time. Everything in the API documentation is working as described.
 
+-> [HTTPS Screenshot](http://i.imgur.com/lQHnE3V.png "HTTPS Hello World") <-
+
 * [ip-project-server](#ip-project-server)
     * [Installation](#installation)
     * [Running](#running)
