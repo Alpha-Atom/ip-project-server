@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 app.get('/hello/(:name)?', function (req, res) {
     var name = req.params.name || "World";
-    res.send('Hello ' + name + "!");
+    res.send('<title>Hello ' + name + '!</title>' + 'Hello ' + name + "!");
 });
 
 app.all('/register', function(req, res) {
