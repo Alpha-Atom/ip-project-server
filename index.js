@@ -24,8 +24,8 @@ app.all('/register', function(req, res) {
     var uquery       = 'user:' + tmp_username;
     var user_object  = {};
 
-    redis.get(uquery).then(function (result) {
-        if (result !== "" && result !== undefined && result !== null) {
+    redis.hgetall(uquery).then(function (result) {
+        if (result.password && result !== undefined && result !== null) {
             res.send({"registered": 0,
                      "error": 1});
         } else {
@@ -50,7 +50,7 @@ app.all('/login', function(req, res) {
     var uquery   = 'user:' + username;
 
     redis.hgetall(uquery).then(function (result) {
-        if (result !== "" && result !== undefined && result !== null) {
+        if (result.password && result !== undefined && result !== null) {
             var user_object = result;
             if (auth_key !== "" && auth_key !== undefined && auth_key !== null) {
                 if (auth_key === user_object["auth-key"]) {
