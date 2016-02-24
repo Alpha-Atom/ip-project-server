@@ -1,5 +1,5 @@
 # ip-project-server
-Server for Integrated Project, powered by Express.js and Redis
+Server for Integrated Project, powered by Express.js and Redis, will eventually use HTTPS so passwords aren't sent unencrypted, need to get some certs. Also at the moment server responds to `ALL` requests, cause it's easier to do testing with `GET`, will also set up unit tests in good time.
 
 * [ip-project-server](#ip-project-server)
     * [Installation](#installation)
