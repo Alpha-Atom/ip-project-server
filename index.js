@@ -32,7 +32,8 @@ app.all('/register', function(req, res) {
             bcrypt.hash(tmp_password, null, null, function (err, hash) {
                 user_object["password"] = hash;
                 user_object["auth-key"] = bcrypt.hashSync(Date.now().toString() + tmp_username);
-                redis.set(uquery, JSON.stringify(user_object));
+                redis.hset(uquery, "password", user_object.password);
+                redis.hset(uquery, "auth-key", user_object["auth-key"]);
                 res.send({"registered": 1,
                          "auth-key": user_object["auth-key"],
                          "error": 0});
@@ -48,14 +49,14 @@ app.all('/login', function(req, res) {
     var auth_key = req.body.auth_key || req.query.auth_key;
     var uquery   = 'user:' + username;
 
-    redis.get(uquery).then(function (result) {
+    redis.hgetall(uquery).then(function (result) {
         if (result !== "" && result !== undefined && result !== null) {
-            var user_object = JSON.parse(result);
+            var user_object = result;
             if (auth_key !== "" && auth_key !== undefined && auth_key !== null) {
                 if (auth_key === user_object["auth-key"]) {
                     var timestamp_user = Date.now().toString() + username;
                     user_object["auth-key"] = bcrypt.hashSync(timestamp_user);
-                    redis.set(uquery, JSON.stringify(user_object));
+                    redis.set(uquery, "auth-key", user_object["auth-key"]);
                     res.send({"logged_in": 1,
                              "auth-key": user_object["auth-key"],
                              "error": 0});
