@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var hello = require("./routes/helloworld.js");
-var register = require("./routes/register.js");
-var login = require("./routes/login.js");
+var hello = require("./routes/misc/helloworld.js");
+var register = require("./routes/user/register.js");
+var login = require("./routes/user/login.js");
 
 module.exports = router;
 
