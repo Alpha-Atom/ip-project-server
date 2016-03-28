@@ -9,7 +9,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
 * [API](#api)
     * [/hello/:name/](#helloname)
     * [/register/](#register)
-    * [/login/](#login)
+    * [/auth/](#auth)
 
 ### Installation
 Instructions are for OSX El Capitan at time of writing.
