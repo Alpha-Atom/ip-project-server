@@ -1,6 +1,6 @@
 var Redis = require("ioredis");
 var redis = new Redis();
-var bcrypt = require('bcrypt-nodejs');
+var authgen = require("./../../utils/auth-keys.js");
 
 module.exports = {
   perform: function(a,b) {
@@ -11,8 +11,9 @@ module.exports = {
 var perform = function (req, res) {
   var tmp_username = req.body.user || req.query.user;
   var tmp_password = req.body.password || req.query.password;
-  tmp_username = tmp_username.toLowerCase();
+  tmp_username     = tmp_username.toLowerCase();
   var uquery       = 'user:' + tmp_username;
+  var aquery       = "";
   var user_object  = {};
 
   redis.hgetall(uquery).then(function (result) {
@@ -22,9 +23,11 @@ var perform = function (req, res) {
     } else {
       bcrypt.hash(tmp_password, null, null, function (err, hash) {
         user_object["password"] = hash;
-        user_object["auth-key"] = bcrypt.hashSync(Date.now().toString() + tmp_username);
+        user_object["auth-key"] = authgen.generate(tmp_username);
+        aquery = "auth-key:" + user_object["auth-key"];
         redis.hset(uquery, "password", user_object.password);
         redis.hset(uquery, "auth-key", user_object["auth-key"]);
+        redis.set(aquery, tmp_username);
         res.send({"registered": 1,
                  "auth-key": user_object["auth-key"],
                  "error": 0});

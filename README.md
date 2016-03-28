@@ -62,19 +62,18 @@ The server will then respond with a JSON object that looks something like this:
 ```
 The value of the error code will be `1` if the username already exists.
 
-### /login/
+### /auth/
 In order to log into an account, or essentially request a new authentication
 token, a `POST` request should be sent with the following data:
 ```javascript
 {
     "user": "FooBar", // Username goes here
-    "password": "hunter2", // Optional field if auth-key is present
-    "auth-key": "$2a$10$.X9YrNyd2R7b2ycAumHn.ONiINs2bCkRDupugu6sjZkUkPmXSaSra" // Optional field if password is present
+    "password": "hunter2", // Password goes here
 }
 ```
-Using the auth-key will reset and generate a new authentication key, whereas
-password will simply get the current auth-key. In either case the following data
-will be returned:
+Using this will then generate a new authentication key, **invalidating** any
+existing authentication key for that account. Note that you do not need to use
+/auth/ after registering as a new auth key is already generated.
 ```javascript
 {
     "logged_in": 1, // Value is 1 or 0 whether or not the login was successful
@@ -83,5 +82,5 @@ will be returned:
 }
 ```
 The error codes are as follows, `1` indicates the username could not be found,
-`2` indicates that the password is invalid and `3` indicates the provided
-authentication key was invalid.
+`2` indicates that the password is invalid and `3` indicates that the login
+request was malformed.
