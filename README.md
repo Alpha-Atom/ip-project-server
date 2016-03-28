@@ -8,8 +8,8 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
     * [Running](#running)
 * [API](#api)
     * [/hello/:name/](#helloname)
-    * [/register/](#register)
-    * [/auth/](#auth)
+    * [/register/](#userregister)
+    * [/auth/](#userauth)
 
 ### Installation
 Instructions are for OSX El Capitan at time of writing.
@@ -43,7 +43,7 @@ node index.js
 ### /hello/:name/
 Returns "Hello :name!" or simply "Hello World!" if no name is present. :)
 
-### /register/
+### /user/register/
 In order to register a new user account, a `POST` request should be sent, with
 the following data:
 ```javascript
@@ -62,7 +62,7 @@ The server will then respond with a JSON object that looks something like this:
 ```
 The value of the error code will be `1` if the username already exists.
 
-### /auth/
+### /user/auth/
 In order to log into an account, or essentially request a new authentication
 token, a `POST` request should be sent with the following data:
 ```javascript
