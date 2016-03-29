@@ -11,7 +11,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
     * [/user/register/](#userregister)
     * [/user/auth/](#userauth)
     * [/society/create/](#societycreate)
-    * [/society/view/](#societyview)
+    * [/society/view/:society\_name](#societyviewsocietyname)
 
 ### Installation
 Instructions are for OSX El Capitan at time of writing.
