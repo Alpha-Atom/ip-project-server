@@ -18,6 +18,7 @@ var perform = function(req,res) {
     society_name = decodeURIComponent(society_name);
     admins = decodeURIComponent(admins);
     description = decodeURIComponent(description);
+    var admins_str = admins;
     admins = JSON.parse(admins);
     redis.hget(soc_query, "name", function (err, result) {
       if (result) {
@@ -28,13 +29,15 @@ var perform = function(req,res) {
           var username = result;
           if (admins.indexOf(result) !== -1) {
             redis.hset(soc_query, "name", society_name);
-            redis.hset(soc_query, "admins", JSON.stringify(admins));
+            redis.hset(soc_query, "admins", admins_str);
             redis.hset(soc_query, "description", description);
+            redis.hset(soc_query, "users", admins_str);
             res.send({"success": 1,
                       "society" : {
                        "name": society_name,
-                       "admins": JSON.stringify(admins),
-                       "description": description
+                       "admins": admins,
+                       "description": description,
+                       "users": admins
                       },
                       "error": 0});
           } else {

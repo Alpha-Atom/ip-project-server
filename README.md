@@ -11,6 +11,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
     * [/user/register/](#userregister)
     * [/user/auth/](#userauth)
     * [/society/create/](#societycreate)
+    * [/society/view/](#societyview)
 
 ### Installation
 Instructions are for OSX El Capitan at time of writing.
@@ -106,6 +107,7 @@ database and a response will be sent looking like this:
         "name": "FooBarSociety",
         "admins": ["FooBar", "BarFoo", "FarBoo"],
         "description": "A description of the FooBarSociety society.",
+        "users": ["FooBar", "BarFoo", "FarBoo"] // At this point the users will simply be the admin list
     }, // An object representing the society
     "error": 0
 }
@@ -114,3 +116,19 @@ The error codes are as follows, `1` indicates a malformed request, `2` indicates
 that a society with that name already exists, and `3` indicates that the user
 does not have authorisation to create that society. (Note that the admin list
 must contain the username that is creating it.)
+
+### /society/view/:society\_name
+To view a created society, :society\_name, a `GET` request should be sent with
+no data. The response will then be formed as follows:
+```javascript
+{
+    "society": { // Society object containing information about the society
+        "name": "FooBarSociety",
+        "admins": ["FooBar", "BarFoo", "FarBoo"],
+        "description": "A description of the FooBarSociety society.",
+        "users": ["FooBar", "BarFoo", "FarBoo"]
+    },
+    "error": 0 // Error code if an error occured, 0 indicates no error.
+}
+```
+The error codes are as follows, `1` indicates that the society does not exist.
