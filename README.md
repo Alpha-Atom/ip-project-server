@@ -84,3 +84,32 @@ existing authentication key for that account. Note that you do not need to use
 The error codes are as follows, `1` indicates the username could not be found,
 `2` indicates that the password is invalid and `3` indicates that the login
 request was malformed.
+
+### /society/create/
+To create a new society, a `POST` request should be sent with the following
+data:
+```javascript
+{
+    "society": "FooBarSociety", // The name of the society to be created.
+    "admins": ["FooBar", "BarFoo", "FarBoo"], // List of initial admins to be added, this list MUST include the user creating the society
+    "description": "A description of the FooBarSociety society.",
+    "auth": "$2a$10$.X9YrNyd2R7b2ycAumHn.ONiINs2bCkRDupugu6sjZkUkPmXSaSra"
+}
+```
+If the society does not already exist, the new values will be added to the
+database and a response will be sent looking like this:
+```javascript
+{
+    "success": 1, // Indicates if a society was successfully created.
+    "society": {
+        "name": "FooBarSociety",
+        "admins": ["FooBar", "BarFoo", "FarBoo"],
+        "description": "A description of the FooBarSociety society.",
+    }, // An object representing the society
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates a malformed request, `2` indicates
+that a society with that name already exists, and `3` indicates that the user
+does not have authorisation to create that society. (Note that the admin list
+must contain the username that is creating it.)
