@@ -43,7 +43,8 @@ node index.js
 # API
 
 ### /hello/:name/
-Returns "Hello :name!" or simply "Hello World!" if no name is present. :)
+Returns "Hello :name!" or simply "Hello World!" if no name is present. Useful
+for checking if the server is running :)
 
 ### /user/register/
 In order to register a new user account, a `POST` request should be sent, with
