@@ -63,7 +63,8 @@ The server will then respond with a JSON object that looks something like this:
     "error": 0 // Error code, if an error occured. 0 indicates no error.
 }
 ```
-The value of the error code will be `1` if the username already exists.
+The value of the error code will be `1` if the username already exists, and `2`
+if the request was malformed.
 
 ### /user/auth/
 In order to log into an account, or essentially request a new authentication
@@ -84,9 +85,8 @@ existing authentication key for that account. Note that you do not need to use
     "error": 0 // Error code, if an error occured. 0 indicates no error.
 }
 ```
-The error codes are as follows, `1` indicates the username could not be found,
-`2` indicates that the password is invalid and `3` indicates that the login
-request was malformed.
+The error codes are as follows, `1` indicates the username or password was
+invalid and `2` indicates that the login request was malformed.
 
 ### /society/create/
 To create a new society, a `POST` request should be sent with the following
