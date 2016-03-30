@@ -1,4 +1,3 @@
-var society_controller = require("./society-controller.js");
 var bcrypt = require("bcrypt-nodejs");
 
 module.exports = {
@@ -17,6 +16,7 @@ module.exports = {
 
   user_can_view_soc_events: function (auth, society, complete) {
     var user_controller = require("./user-controller.js");
+    var society_controller = require("./society-controller.js");
     user_controller.get_user_from_auth(auth, function (username) {
       if (!username) {
         complete(false);
@@ -34,6 +34,7 @@ module.exports = {
 
   user_can_manage_soc_events: function (auth, society, complete) {
     var user_controller = require("./user-controller.js");
+    var society_controller = require("./society-controller.js");
     user_controller.get_user_from_auth(auth, function(username) {
       if (!username) {
         complete(false);
@@ -50,8 +51,7 @@ module.exports = {
   },
 
   user_can_manage_society: function (auth, society, complete) {
-    var user_controller = require("./user-controller.js");
-    user_can_manage_soc_events(auth, society, function (permission) {
+    this.user_can_manage_soc_events(auth, society, function (permission) {
       complete(permission);
     });
   }
