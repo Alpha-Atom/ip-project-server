@@ -1,4 +1,4 @@
-var user_controller = require("./../../controllers/user-controller.js");
+var user_controller = require("./../../presenters/user-controller.js");
 
 module.exports = {
   perform: function(a,b) {

@@ -1,5 +1,4 @@
-var Redis = require("ioredis");
-var redis = new Redis();
+var society_controller = require("./../../presenters/society-controller.js");
 
 module.exports = {
   perform: function (a,b) {
@@ -8,19 +7,7 @@ module.exports = {
 }
 
 var perform = function (req, res) {
-  var auth_key = req.body.auth || req.query.auth;
-
-  redis.hgetall("society:" + req.params.societyid).then(function (result) {
-    if (result.name) {
-      result.users = JSON.parse(result.users);
-      result.admins = JSON.parse(result.admins);
-      res.send({
-        "society": result,
-        "error": 0
-      });
-    } else {
-      res.send({"society": {},
-               "error": 1});
-    }
-  });
+  society_controller.get_society(req.params.societyid, function (result) {
+    res.send(result);
+  })
 };

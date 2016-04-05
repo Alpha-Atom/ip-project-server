@@ -1,5 +1,4 @@
-var Redis = require("ioredis");
-var redis = new Redis();
+// var require = require("modulehere");
 
 module.exports = {
   perform: function (a,b) {
