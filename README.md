@@ -121,6 +121,41 @@ that a society with that name already exists, and `3` indicates that the user
 does not have authorisation to create that society. (Note that the admin list
 must contain the username that is creating it.)
 
+### /society/view/
+To view a list of all the societies, a `GET` request should be sent with no data
+to this route with no parameter. The response will be formed as follows:
+```javascript
+{
+    "societies": [
+        {
+            "name": "TestSociety",
+            "admins": [
+                "test1",
+                "test2"
+            ],
+            "description": "This is a test",
+            "users": [
+                "test1",
+                "test2"
+            ]
+        },
+        {
+            "name": "TestSociety2",
+            "admins": [
+                "test1",
+                "test2"
+            ],
+            "description": "This is a test",
+            "users": [
+                "test1",
+                "test2"
+            ]
+        }
+    ]
+}
+```
+There are no error codes for this route.
+
 ### /society/view/:society\_name
 To view a created society, :society\_name, a `GET` request should be sent with
 no data. The response will then be formed as follows:
