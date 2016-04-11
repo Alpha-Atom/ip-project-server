@@ -14,7 +14,7 @@ module.exports = {
     complete(true);
   },
 
-  user_can_view_soc_events: function (auth, society, complete) {
+  user_is_in_society: function (auth, society, complete) {
     var user_controller = require("./user-controller.js");
     var society_controller = require("./society-controller.js");
     user_controller.get_user_from_auth(auth, function (username) {
