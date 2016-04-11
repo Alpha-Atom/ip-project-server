@@ -133,6 +133,6 @@ module.exports = {
   },
 
   leave_society: function (soc_name, auth, complete) {
-    permissions_controller.user_is_in_society(auth, soc_name, function)
+    // permissions_controller.user_is_in_society(auth, soc_name, function)
   }
 }
