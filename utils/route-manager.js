@@ -14,4 +14,4 @@ router.all('/user/register/', register.perform);
 router.all('/user/auth/', login.perform);
 
 router.all('/society/create', soc_create.perform);
-router.all('/society/view/:societyid', soc_view.perform);
+router.all('/society/view/(:societyid)?', soc_view.perform);

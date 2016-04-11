@@ -132,6 +132,37 @@ module.exports = {
     });
   },
 
+  get_all_societies: function (complete) {
+    var self = this;
+    var stream = redis.scanStream({
+      match: "society:*"
+    });
+    var society_names = [];
+    stream.on('data', function (keys) {
+      keys.map(function(key) {
+        society_names.push(key.split(":")[1]);
+      });
+    });
+    stream.on('end', function () {
+      var soc_objects = [];
+      for (var ii = 0; ii < society_names.length; ii++) {
+        self.get_society(society_names[ii], function(response) {
+          soc_objects.push(response.society);
+          if (soc_objects.length === society_names.length) {
+            soc_objects.sort(function(a, b) {
+              var textA = a.name.toLowerCase();
+              var textB = b.name.toLowerCase();
+              return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
+            complete({
+              "societies": soc_objects
+            });
+          }
+        });
+      }
+    })
+  },
+
   leave_society: function (soc_name, auth, complete) {
     // permissions_controller.user_is_in_society(auth, soc_name, function)
   }

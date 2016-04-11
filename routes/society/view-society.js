@@ -7,7 +7,13 @@ module.exports = {
 }
 
 var perform = function (req, res) {
-  society_controller.get_society(req.params.societyid, function (result) {
-    res.send(result);
-  })
+  if (req.params.societyid) {
+    society_controller.get_society(req.params.societyid, function (result) {
+      res.send(result);
+    });
+  } else {
+    society_controller.get_all_societies(function (result) {
+      res.send(result);
+    });
+  }
 };
