@@ -14,6 +14,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
     * [/user/register/](#userregister)
     * [/user/auth/](#userauth)
     * [/society/create/](#societycreate)
+    * [/society/view](#societyview)
     * [/society/view/:society\_name](#societyviewsociety_name)
 
 ### Installation
