@@ -106,7 +106,7 @@ module.exports = {
           if (auth) {
             redis.del("auth-key:" + auth);
           }
-          redis.set("auth-key:" + auth, new_auth_key);
+          redis.set("auth-key:" + new_auth_key, user);
           redis.hset(user_key, "auth-key", new_auth_key);
 
           complete({
