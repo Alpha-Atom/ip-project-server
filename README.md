@@ -13,6 +13,8 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
     * [/hello/:name/](#helloname)
     * [/user/register/](#userregister)
     * [/user/auth/](#userauth)
+    * [/user/view/](#userview)
+    * [/user/view/:user](#userviewuser)
     * [/society/create/](#societycreate)
     * [/society/view/](#societyview)
     * [/society/view/:society\_name](#societyviewsociety_name)
@@ -92,6 +94,27 @@ existing authentication key for that account. Note that you do not need to use
 ```
 The error codes are as follows, `1` indicates the username or password was
 invalid and `2` indicates that the login request was malformed.
+
+### /user/view/
+As yet unimplemented but will eventually return all of the users.
+
+### /user/view/:user
+To view the public information for any given `:user`, a `GET` request should be
+sent with no data, and the returned response will look like this:
+```javascript
+{
+    "user": {
+        "username": "test1",
+        "societies": [
+            "TestSociety2"
+        ],
+        "friends": [],
+        "accepted_events": []
+    },
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates that the user does not exist.
 
 ### /society/create/
 To create a new society, a `POST` request should be sent with the following

@@ -20,11 +20,22 @@ module.exports = {
     var user_key = "user:" + user;
 
     redis.hgetall(user_key, function(err, result) {
-      var public = {};
-      public.username = user;
-      public.societies = result.societies || [];
-      public.friends = result.friends || [];
-      public.accepted_events = result.accepted_events || [];
+      if (result.password) {
+        var public = {};
+        public.username = user;
+        public.societies = JSON.parse(result.societies) || [];
+        public.friends = JSON.parse(result.friends) || [];
+        public.accepted_events = JSON.parse(result.accepted_events) || [];
+        complete({
+          "user": public,
+          "error": 0
+        });
+      } else {
+        complete({
+          "user": {},
+          "error": 1
+        });
+      }
     });
   },
 
