@@ -44,6 +44,7 @@ module.exports = {
             redis.hset(soc_query, "admins", admins_str);
             redis.hset(soc_query, "description", description);
             redis.hset(soc_query, "users", admins_str);
+            redis.hset(soc_query, "events", JSON.stringify([]));
             admins.map(function (admin_name) {
               user_controller.user_exists(admin_name, function (exists) {
                 if (!exists) {
