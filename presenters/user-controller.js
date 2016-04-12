@@ -101,7 +101,7 @@ module.exports = {
       var user_key = "user:" + user;
 
       if (success) {
-        redis.hget(user_key, "auth-key", function (auth) {
+        redis.hget(user_key, "auth-key", function (err, auth) {
           var new_auth_key = auth_gen.generate(user);
           if (auth) {
             redis.del("auth-key:" + auth);
