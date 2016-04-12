@@ -9,6 +9,7 @@ module.exports = {
       if (result.name) {
         result.users = JSON.parse(result.users);
         result.admins = JSON.parse(result.admins);
+        result.events = JSON.parse(result.events);
         complete({
           "society": result,
           "error": 0
