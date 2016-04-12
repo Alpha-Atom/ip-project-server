@@ -96,7 +96,32 @@ The error codes are as follows, `1` indicates the username or password was
 invalid and `2` indicates that the login request was malformed.
 
 ### /user/view/
-As yet unimplemented but will eventually return all of the users.
+To view all the public information for all users at once, a `GET` request should
+be sent with no data, and the returned response will look like this:
+```javascript
+{
+    "users": [
+        {
+            "username": "test1",
+            "societies": [
+                "TestSociety2"
+            ],
+            "friends": [],
+            "accepted_events": []
+        },
+        {
+            "username": "test2",
+            "societies": [
+                "TestSociety2"
+            ],
+            "friends": [],
+            "accepted_events": []
+        },
+        { ... } // More items here
+    ]
+}
+```
+There are no error codes for this route.
 
 ### /user/view/:user
 To view the public information for any given `:user`, a `GET` request should be

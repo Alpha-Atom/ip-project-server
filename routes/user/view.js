@@ -11,5 +11,9 @@ var perform = function (req, res) {
     user_controller.get_public_user_info(req.params.user.toLowerCase(), function (response) {
       res.send(response);
     });
+  } else {
+    user_controller.get_all_public_infos(function (response) {
+      res.send(response);
+    });
   }
 };

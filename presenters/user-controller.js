@@ -39,6 +39,43 @@ module.exports = {
     });
   },
 
+  get_all_public_infos: function (complete) {
+    var self = this;
+    var stream = redis.scanStream({
+      match: "user:*"
+    });
+    var usernames = [];
+    stream.on('data', function (keys) {
+      keys.map(function (key) {
+        usernames.push(key.split(":")[1]);
+      });
+    });
+    stream.on('end', function () {
+      var user_objects = [];
+      if (usernames.length === 0) {
+        complete({
+          "users": []
+        })
+      } else {
+        for (var ii = 0; ii < usernames.length; ii++) {
+          self.get_public_user_info(usernames[ii], function (response) {
+            user_objects.push(response.user);
+            if (user_objects.length === usernames.length) {
+              user_objects.sort(function(a, b) {
+                var textA = a.username.toLowerCase();
+                var textB = b.username.toLowerCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+              });
+              complete({
+                "users": user_objects
+              })
+            }
+          });
+        }
+      }
+    });
+  },
+
   get_user_from_auth: function (auth, complete) {
     var auth_key = "auth-key:" + auth;
 
