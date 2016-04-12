@@ -16,6 +16,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
     * [/society/create/](#societycreate)
     * [/society/view/](#societyview)
     * [/society/view/:society\_name](#societyviewsociety_name)
+    * [/society/join/](#societyjoin)
 
 ### Installation
 Instructions are for OSX El Capitan at time of writing.
@@ -172,3 +173,21 @@ no data. The response will then be formed as follows:
 }
 ```
 The error codes are as follows, `1` indicates that the society does not exist.
+
+### /society/join/
+To join a society, a `POST` request should be sent with the following data:
+```javascript
+{
+    "society": "TestSociety", // Society name here
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2" // Auth key here
+}
+```
+The response is then formed as follows:
+```javascript
+{
+    "success": 1, // Indicates successfulness
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates that the user is already a member
+of that society and `2` indicates a malformed request.
