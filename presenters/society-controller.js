@@ -55,9 +55,10 @@ module.exports = {
               admins.map(function (admin_name) {
                 redis.hget("user:" + admin_name, "societies", function (err, result) {
                   if (result) {
-                    redis.hset("user:" + admin_name, "societies", result.concat(society_name));
+                    result = JSON.parse(result);
+                    redis.hset("user:" + admin_name, "societies", JSON.stringify(result.concat(society_name)));
                   } else {
-                    redis.hset("user:" + admin_name, "societies", [society_name]);
+                    redis.hset("user:" + admin_name, "societies", JSON.stringify([society_name]));
                   }
                 });
               });
@@ -115,13 +116,15 @@ module.exports = {
           user_query = "user:" + username;
           redis.hget(user_query, "societies", function (err, result) {
             if (result) {
-              redis.hset(user_query, "societies", result.concat(society_name));
+              result = JSON.parse(result);
+              redis.hset(user_query, "societies", JSON.stringify(result.concat(soc_name)));
             } else {
-              redis.hset(user_query, "societies", [society_name]);
+              redis.hset(user_query, "societies", JSON.stringify([soc_name]));
             }
           });
           redis.hget("society:" + soc_name, "users", function (err, users_result) {
-            redis.hset("society" + soc_name, users_result.concat(username));
+            users_result = JSON.parse(users_result);
+            redis.hset("society:" + soc_name, "users", JSON.stringify(users_result.concat(username)));
           });
         });
         complete({
@@ -145,6 +148,12 @@ module.exports = {
     });
     stream.on('end', function () {
       var soc_objects = [];
+      if (society_names.length === 0) {
+        complete({
+          "societies": []
+        });
+        return;
+      }
       for (var ii = 0; ii < society_names.length; ii++) {
         self.get_society(society_names[ii], function(response) {
           soc_objects.push(response.society);
@@ -160,7 +169,7 @@ module.exports = {
           }
         });
       }
-    })
+    });
   },
 
   leave_society: function (soc_name, auth, complete) {

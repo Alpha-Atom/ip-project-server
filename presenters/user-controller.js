@@ -16,6 +16,18 @@ module.exports = {
     });
   },
 
+  get_public_user_info: function (user, complete) {
+    var user_key = "user:" + user;
+
+    redis.hgetall(user_key, function(err, result) {
+      var public = {};
+      public.username = user;
+      public.societies = result.societies || [];
+      public.friends = result.friends || [];
+      public.accepted_events = result.accepted_events || [];
+    });
+  },
+
   get_user_from_auth: function (auth, complete) {
     var auth_key = "auth-key:" + auth;
 
@@ -83,6 +95,11 @@ module.exports = {
 
           redis.hset(user_key, "password", new_user["password"]);
           redis.hset(user_key, "auth-key", new_user["auth-key"]);
+          redis.hset(user_key, "societies", JSON.stringify([]));
+          redis.hset(user_key, "friends", JSON.stringify([]));
+          redis.hset(user_key, "pending_events", JSON.stringify([]));
+          redis.hset(user_key, "accepted_events", JSON.stringify([]));
+          redis.hset(user_key, "declined_events", JSON.stringify([]));
           redis.set(auth_key, user);
           complete({
             "registered": 1,
