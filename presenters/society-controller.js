@@ -46,37 +46,36 @@ module.exports = {
             redis.hset(soc_query, "description", description);
             redis.hset(soc_query, "users", admins_str);
             redis.hset(soc_query, "events", JSON.stringify([]));
-            admins.map(function (admin_name) {
+            admins.map(function (admin_name, idx, adm) {
               user_controller.user_exists(admin_name, function (exists) {
                 if (!exists) {
                   users_exist = false;
                 }
+                if (idx === adm.length-1 && users_exist) {
+                  admins.map(function (admin_name) {
+                    redis.hget("user:" + admin_name, "societies", function (err, result) {
+                      if (result) {
+                        result = JSON.parse(result);
+                        redis.hset("user:" + admin_name, "societies", JSON.stringify(result.concat(society_name)));
+                      } else {
+                        redis.hset("user:" + admin_name, "societies", JSON.stringify([society_name]));
+                      }
+                    });
+                  });
+                  complete({"success": 1,
+                           "society" : {
+                             "name": society_name,
+                             "admins": admins,
+                             "description": description,
+                             "users": admins
+                           },
+                           "error": 0});
+                } else if (idx === adm.length-1) {
+                  complete({"success": 0,
+                           "error": 4});
+                }
               });
             });
-            if (users_exist) {
-              admins.map(function (admin_name) {
-                redis.hget("user:" + admin_name, "societies", function (err, result) {
-                  if (result) {
-                    result = JSON.parse(result);
-                    redis.hset("user:" + admin_name, "societies", JSON.stringify(result.concat(society_name)));
-                  } else {
-                    redis.hset("user:" + admin_name, "societies", JSON.stringify([society_name]));
-                  }
-                });
-              });
-              complete({"success": 1,
-                       "society" : {
-                         "name": society_name,
-                         "admins": admins,
-                         "description": description,
-                         "users": admins
-                       },
-                       "error": 0});
-
-            } else {
-              complete({"success": 0,
-                       "error": 4});
-            }
           } else {
             complete({"success": 0,
                      "error": 3});
