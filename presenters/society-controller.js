@@ -5,7 +5,7 @@ var user_controller = require("./user-controller.js");
 
 module.exports = {
   get_society: function (soc_name, complete) {
-    redis.hgetall("society:" + soc_name, function (err, result) {
+    redis.hgetall(("society:" + soc_name).toLowerCase(), function (err, result) {
       if (result.name) {
         result.users = JSON.parse(result.users);
         result.admins = JSON.parse(result.admins);
@@ -25,8 +25,8 @@ module.exports = {
 
   create_society: function (soc_name, admins, description, auth, complete) {
     var society_name = decodeURIComponent(soc_name);
-    var soc_query = "society:" + society_name;
-    admins = decodeURIComponent(admins);
+    var soc_query = ("society:" + society_name).toLowerCase();
+    admins = decodeURIComponent(admins).toLowerCase();
     description = decodeURIComponent(description);
     var admins_str = admins;
     admins = JSON.parse(admins);
@@ -123,9 +123,9 @@ module.exports = {
               redis.hset(user_query, "societies", JSON.stringify([soc_name]));
             }
           });
-          redis.hget("society:" + soc_name, "users", function (err, users_result) {
+          redis.hget(("society:" + soc_name).toLowerCase(), "users", function (err, users_result) {
             users_result = JSON.parse(users_result);
-            redis.hset("society:" + soc_name, "users", JSON.stringify(users_result.concat(username)));
+            redis.hset(("society:" + soc_name).toLowerCase(), "users", JSON.stringify(users_result.concat(username)));
           });
         });
         complete({
