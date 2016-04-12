@@ -41,17 +41,17 @@ module.exports = {
           var user_query = "user:" + username;
           var users_exist = true;
           if (admins.indexOf(result) !== -1) {
-            redis.hset(soc_query, "name", society_name);
-            redis.hset(soc_query, "admins", admins_str);
-            redis.hset(soc_query, "description", description);
-            redis.hset(soc_query, "users", admins_str);
-            redis.hset(soc_query, "events", JSON.stringify([]));
             admins.map(function (admin_name, idx, adm) {
               user_controller.user_exists(admin_name, function (exists) {
                 if (!exists) {
                   users_exist = false;
                 }
                 if (idx === adm.length-1 && users_exist) {
+                  redis.hset(soc_query, "name", society_name);
+                  redis.hset(soc_query, "admins", admins_str);
+                  redis.hset(soc_query, "description", description);
+                  redis.hset(soc_query, "users", admins_str);
+                  redis.hset(soc_query, "events", JSON.stringify([]));
                   admins.map(function (admin_name) {
                     redis.hget("user:" + admin_name, "societies", function (err, result) {
                       if (result) {
