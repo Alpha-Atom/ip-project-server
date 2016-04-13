@@ -31,6 +31,9 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
         * [/events/pending/](#eventspending)
         * [/events/accept/:eventid](#eventsaccepteventid)
         * [/events/decline/:eventid](#eventsdeclineeventid)
+    * __Friends__
+        * [/friends/add/](#friendsadd)
+        * [/friends/remove/](#friendsremove)
 
 ### Installation
 Instructions are for OSX El Capitan at time of writing.
@@ -468,3 +471,42 @@ The response will then look like this:
 ```
 The error codes are as follows, `1` indicates an invalid auth code, `2`
 indicates the event could not be found and `3` indicates a malformed request.
+
+### /friends/add/
+To add a new friend, a `POST` request should be sent with the following data:
+```javascript
+{
+    "friend": "MyFriend",
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+The response will then look like this:
+```javascript
+{
+    "success": 1,
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates an invalid auth code, `2`
+indicates that the user is already a friend, `3` indicates that the user you are
+trying to add does not exist and `4` indicates a malformed request.
+
+### /friends/remove/
+To remove a friend from the friends list, a `POST` request should be sent with
+the following data:
+```javascript
+{
+    "friend": "MyFriend",
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+The response will then look like this:
+```javascript
+{
+    "success": 1,
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates an invalid auth code, `2`
+indicates that the user you are trying to remove is not an existing friend
+and `3` indicates a malformed request.
