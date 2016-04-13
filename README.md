@@ -10,25 +10,26 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
     * [Installation](#installation)
     * [Running](#running)
 * [API](#api)
-    * [/hello/:name/](#helloname)
-
-    * [/user/register/](#userregister)
-    * [/user/auth/](#userauth)
-    * [/user/view/](#userview)
-    * [/user/view/:user](#userviewuser)
-
-    * [/society/create/](#societycreate)
-    * [/society/view/](#societyview)
-    * [/society/view/:society\_name](#societyviewsociety_name)
-    * [/society/view/:society\_name/events](#societyviewsociety_nameevents)
-    * [/society/join/](#societyjoin)
-    * [/society/leave/](#societyleave)
-
-    * [/events/create/](#eventscreate)
-    * [/events/view/:eventid](#eventsvieweventid)
-    * [/events/pending/](#eventspending)
-    * [/events/accept/:eventid](#eventsaccepteventid)
-    * [/events/decline/:eventid](#eventsdeclineeventid)
+    * misc
+        * [/hello/:name/](#helloname)
+    * user
+        * [/user/register/](#userregister)
+        * [/user/auth/](#userauth)
+        * [/user/view/](#userview)
+        * [/user/view/:user](#userviewuser)
+    * society
+        * [/society/create/](#societycreate)
+        * [/society/view/](#societyview)
+        * [/society/view/:society\_name](#societyviewsociety_name)
+        * [/society/view/:society\_name/events](#societyviewsociety_nameevents)
+        * [/society/join/](#societyjoin)
+        * [/society/leave/](#societyleave)
+    * events
+        * [/events/create/](#eventscreate)
+        * [/events/view/:eventid](#eventsvieweventid)
+        * [/events/pending/](#eventspending)
+        * [/events/accept/:eventid](#eventsaccepteventid)
+        * [/events/decline/:eventid](#eventsdeclineeventid)
 
 ### Installation
 Instructions are for OSX El Capitan at time of writing.
