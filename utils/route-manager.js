@@ -15,6 +15,8 @@ var event_view = require("../routes/events/view-society-events.js");
 var event_pending = require("../routes/events/view-pending-events.js");
 var event_accept = require("../routes/events/accept-event.js");
 var event_decline = require("../routes/events/decline-event.js");
+var friend_add = require("../routes/friends/add-friend.js");
+var friend_remove = require("../routes/friends/remove-friend.js");
 
 module.exports = router;
 
@@ -36,3 +38,6 @@ router.all('/events/view/:eventid', event_view.perform);
 router.all('/events/pending/', event_pending.perform);
 router.all('/events/accept/:eventid', event_accept.perform);
 router.all('/events/decline/:eventid', event_decline.perform);
+
+router.all('/friends/add/', friend_add.perform);
+router.all('/friends/remove/', friend_remove.perform);

@@ -166,7 +166,75 @@ module.exports = {
           })
         });
       }
-    })
+    });
+  },
 
+  add_friend: function(friend, auth, complete) {
+    var self = this;
+    friend = friend.toLowerCase();
+    self.get_user_from_auth(auth, function (username) {
+      if (username) {
+        self.get_public_user_info(username, function (userdata) {
+          var friends = userdata.user.friends;
+          if (friends.indexOf(friend) > -1) {
+            complete({
+              "success": 0,
+              "error": 2
+            });
+          } else {
+            self.user_exists(friend, function (exists) {
+              if (exists) {
+                friends.push(friend);
+                redis.hset("user:" + username.toLowerCase(), "friends", JSON.stringify(friends));
+                complete({
+                  "success": 1,
+                  "error": 0
+                });
+              } else {
+                complete({
+                  "success": 0,
+                  "error": 3
+                });
+              }
+            });
+          }
+        });
+      } else {
+        complete({
+          "success": 0,
+          "error": 1
+        });
+      }
+    });
+  },
+
+  remove_friend: function(friend, auth, complete) {
+    var self = this;
+    friend = friend.toLowerCase();
+    self.get_user_from_auth(auth, function (username) {
+      if (username) {
+        self.get_public_user_info(username, function (userdata) {
+          var friends = userdata.user.friends;
+          if (friends.indexOf(friend) === -1) {
+            complete({
+              "success": 0,
+              "error": 2
+            });
+          } else {
+            friends.splice(friends.indexOf(friend), 1);
+            redis.hset("user:" + username.toLowerCase(), "friends", JSON.stringify(friends));
+            complete({
+              "success": 1,
+              "error": 0
+            });
+          }
+        });
+      } else {
+        complete({
+          "success": 0,
+          "error": 1
+        });
+      }
+    });
   }
 }
