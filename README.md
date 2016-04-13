@@ -11,14 +11,23 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
     * [Running](#running)
 * [API](#api)
     * [/hello/:name/](#helloname)
+
     * [/user/register/](#userregister)
     * [/user/auth/](#userauth)
     * [/user/view/](#userview)
     * [/user/view/:user](#userviewuser)
+
     * [/society/create/](#societycreate)
     * [/society/view/](#societyview)
     * [/society/view/:society\_name](#societyviewsociety_name)
+    * [/society/view/:society\_name/events](#societyviewsociety_nameevents)
     * [/society/join/](#societyjoin)
+
+    * [/events/create/](#eventscreate)
+    * [/events/view/:eventid](#eventsvieweventid)
+    * [/events/pending/](#eventspending)
+    * [/events/accept/:eventid](#eventsaccepteventid)
+    * [/events/decline/:eventid](#eventsdeclineeventid)
 
 ### Installation
 Instructions are for OSX El Capitan at time of writing.
@@ -222,6 +231,47 @@ no data. The response will then be formed as follows:
 ```
 The error codes are as follows, `1` indicates that the society does not exist.
 
+### /society/view/:society\_name/events
+To view all the events for a society, :society\_name, a `GET` request should be
+sent with the following data:
+```javascript
+{
+  "auth": "$2a$10$ruuu6QfYLjW1QKOwONVvkelXuh8EVFyug/kJvfaTNL0aXNGyODZ9K"
+}
+```
+Then the server will respond like this:
+```javascript
+{
+  "events": [
+    {
+      "name": "Super Mario Kart Party",
+      "location": "Marioland",
+      "society": "TestSociety",
+      "start": "14605026110490",
+      "end": "14605026110500",
+      "details": "Play some Mario Kart with us",
+      "organiser": "test1"
+    },
+    {
+      "name": "Super Mario Kart Party 2",
+      "location": "Marioland",
+      "society": "TestSociety",
+      "start": "14605026110490",
+      "end": "14605026110500",
+      "details": "Play some Mario Kart with us",
+      "organiser": "test1"
+    },
+    { ... },
+    { ... },
+    { ... },
+    { ... }
+  ],
+  "error": 0
+}
+```
+The error codes are as follows, `1` indicates an invalid authentication key and
+`2` indicates a malformed request.
+
 ### /society/join/
 To join a society, a `POST` request should be sent with the following data:
 ```javascript
@@ -239,3 +289,20 @@ The response is then formed as follows:
 ```
 The error codes are as follows, `1` indicates that the user is already a member
 of that society and `2` indicates a malformed request.
+
+### /events/create/
+To create a new event, a `POST` request... its 4:30am and im shit tired of
+writing documentation, essentially just give it an auth key for all the following
+requests and you'll be golden, you can check what shit gets returned for yourself
+until I get a chance to write this up
+
+### /events/view/:eventid
+
+
+### /events/pending/
+
+
+### /events/accept/:eventid
+
+
+### /events/decline/:eventid

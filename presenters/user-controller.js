@@ -26,6 +26,7 @@ module.exports = {
         public.societies = JSON.parse(result.societies) || [];
         public.friends = JSON.parse(result.friends) || [];
         public.accepted_events = JSON.parse(result.accepted_events) || [];
+        public.declined_events = JSON.parse(result.declined_events) || [];
         complete({
           "user": public,
           "error": 0
@@ -36,6 +37,15 @@ module.exports = {
           "error": 1
         });
       }
+    });
+  },
+
+  get_raw_user: function (user, complete) {
+    console.warn("WARNING: Accessing raw user info, use with care and do not expose to API endpoints.");
+    var user_key = "user:" + user;
+
+    redis.hgetall(user_key, function(err, result) {
+      complete(result);
     });
   },
 
