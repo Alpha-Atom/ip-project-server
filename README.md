@@ -24,6 +24,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
         * [/society/view/:society\_name/events](#societyviewsociety_nameevents)
         * [/society/join/](#societyjoin)
         * [/society/leave/](#societyleave)
+        * [/society/promote/](#societypromote)
     * __Events__
         * [/events/create/](#eventscreate)
         * [/events/view/:eventid](#eventsvieweventid)
@@ -309,6 +310,27 @@ The response is then formed as follows:
 ```
 The error codes are as follows, `1` indicates that the user isn't a member
 of that society and `2` indicates a malformed request.
+
+### /society/promote/
+To promote a user within a society, a `POST` request should be sent with the
+following data:
+```javascript
+{
+    "user": "Test1",
+    "society": "TestSociety",
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+The response will then be formed as follows:
+```javascript
+{
+    "success": 1,
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates that the auth key is invalid, `2`
+indicates that the user does not belong to the society, `3` indicates that the
+user is already an admin and `4` indicates a malformed request.
 
 ### /events/create/
 To create a new event, a `POST` request should be sent with the following data:

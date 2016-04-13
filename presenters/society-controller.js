@@ -232,5 +232,46 @@ module.exports = {
         });
       }
     });
+  },
+
+  promote_user: function (promotee, soc_name, auth, complete) {
+    var self = this;
+    permissions_controller.user_can_manage_society(auth, soc_name, function (isadmin) {
+      if (isadmin) {
+        self.get_user_list(soc_name, function (userlist) {
+          if (userlist.indexOf(promotee) !== -1) {
+            redis.hget("society:" + soc_name.toLowerCase(), "admins", function (err, result) {
+              if (result) {
+                result = JSON.parse(result);
+                if (result.indexOf(promotee) > -1) {
+                  complete({
+                    "success": 0,
+                    "error": 3
+                  });
+                } else {
+                redis.hset("society:" + soc_name.toLowerCase(), "admins", JSON.stringify(result.concat(promotee)));
+                complete({
+                  "success": 1,
+                  "error": 0
+                });
+              }
+              }else {
+                console.error("Error could not find admin list in society.");
+              }
+            });
+          } else {
+            complete({
+              "success": 0,
+              "error": 2
+            })
+          }
+        });
+      } else {
+        complete({
+          "success": 0,
+          "error": 1
+        })
+      }
+    });
   }
 }
