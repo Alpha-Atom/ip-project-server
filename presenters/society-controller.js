@@ -174,6 +174,63 @@ module.exports = {
   },
 
   leave_society: function (soc_name, auth, complete) {
-    // permissions_controller.user_is_in_society(auth, soc_name, function)
+    permissions_controller.user_is_in_society(auth, soc_name, function(user_in_soc) {
+      if (user_in_soc) {
+        soc_name = soc_name.toLowerCase();
+        user_controller.get_user_from_auth(auth, function (username) {
+          var user_query = "user:" + username;
+          var soc_query = "society:" + soc_name.toLowerCase();
+          redis.hget(user_query, "societies", function (err, result) {
+            if (result) {
+              result = JSON.parse(result);
+              var idx = result.indexOf(soc_name);
+              if (idx > -1) {
+                result.splice(idx, 1);
+              }
+              redis.hset(user_query, "societies", JSON.stringify(result));
+            } else {
+              console.error("Error could not find society to remove.");
+            }
+          });
+          redis.hget(soc_query, "users", function (err, result) {
+            if (result) {
+              result = JSON.parse(result);
+              var idx = result.indexOf(username);
+              if (idx > -1) {
+                result.splice(idx, 1);
+              }
+              redis.hset(soc_query, "users", JSON.stringify(result));
+            } else {
+              console.error("Error could not find society user list.");
+            }
+          });
+          permissions_controller.user_can_manage_society(auth, soc_name, function (isadmin) {
+            if (isadmin) {
+              redis.hget(soc_query, "admins", function (err, result) {
+                if (result) {
+                  result = JSON.parse(result);
+                  var idx = result.indexOf(username);
+                  if (idx > -1) {
+                    result.splice(idx, 1);
+                  }
+                  redis.hset(soc_query, "admins", JSON.stringify(result));
+                } else {
+                  console.error("Error could not find society admin list.");
+                }
+              });
+            }
+          });
+          complete({
+            "success": 1,
+            "error": 0
+          });
+        });
+      } else {
+        complete({
+          "success": 0,
+          "error": 1
+        });
+      }
+    });
   }
 }

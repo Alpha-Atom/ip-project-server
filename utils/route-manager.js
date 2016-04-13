@@ -7,6 +7,7 @@ var user_view = require("../routes/user/view.js");
 var soc_create = require("../routes/society/create-society.js");
 var soc_view = require("../routes/society/view-society.js");
 var soc_join = require("../routes/society/join-society.js");
+var soc_leave = require("../routes/society/leave-society.js");
 var soc_events = require("../routes/events/view-all-society-events.js");
 var event_create = require("../routes/events/create-society-event.js");
 var event_view = require("../routes/events/view-society-events.js");
@@ -26,6 +27,7 @@ router.all('/society/create/', soc_create.perform);
 router.all('/society/view/(:societyid)?', soc_view.perform);
 router.all('/society/view/:societyid/events/', soc_events.perform);
 router.all('/society/join/', soc_join.perform);
+router.all('/society/leave/', soc_leave.perform);
 
 router.all('/events/create/', event_create.perform);
 router.all('/events/view/:eventid', event_view.perform);
