@@ -20,6 +20,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
     * [/society/view/:society\_name](#societyviewsociety_name)
     * [/society/view/:society\_name/events](#societyviewsociety_nameevents)
     * [/society/join/](#societyjoin)
+    * [/society/leave/](#societyleave)
     * [/events/create/](#eventscreate)
     * [/events/view/:eventid](#eventsvieweventid)
     * [/events/pending/](#eventspending)
@@ -287,19 +288,157 @@ The response is then formed as follows:
 The error codes are as follows, `1` indicates that the user is already a member
 of that society and `2` indicates a malformed request.
 
+### /society/leave/
+To leave a society, a `POST` request should be sent with the following data:
+```javascript
+{
+    "society": "TestSociety", // Society name here
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2" // Auth key here
+}
+```
+The response is then formed as follows:
+```javascript
+{
+    "success": 1, // Indicates successfulness
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates that the user isn't a member
+of that society and `2` indicates a malformed request.
+
 ### /events/create/
-To create a new event, a `POST` request... its 4:30am and im shit tired of
-writing documentation, essentially just give it an auth key for all the following
-requests and you'll be golden, you can check what shit gets returned for yourself
-until I get a chance to write this up
+To create a new event, a `POST` request should be sent with the following data:
+```javascript
+{
+    "society": "TestSociety",
+    "name": "Test Event",
+    "location": "Test Location",
+    "start": "1460552065702",
+    "end": "1460552065734",
+    "details": "Some details about the test event",
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+Note that the end time of the event must be greater than the start time and the
+start time must be greater than Date.now(). Perhaps some client side
+verification that ensures, for example, the time of the event is the next day.
+The response will look like this:
+```javascript
+{
+    "success": 1,
+    "event": {
+        "id": "101898721",
+        "name": "Super Mario Kart Party",
+        "organiser": "test1",
+        "location": "Marioland",
+        "society": "TestSociety",
+        "start": "14605026110490",
+        "end": "14605026110500",
+        "details": "Play some Mario Kart with us"
+    },
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates that the user is not an admin of the society,
+`2` indicates that the event times are in some way invalid and `3` indicates that the
+request was malformed.
 
 ### /events/view/:eventid
-
+To view any individual event, a `GET` request should be sent with the following data:
+```javascript
+{
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+The response will then look like this:
+```javascript
+{
+    "event": {
+        "name": "Super Mario Kart Party",
+        "location": "Marioland",
+        "society": "TestSociety",
+        "start": "14605026110490",
+        "end": "14605026110500",
+        "details": "Play some Mario Kart with us",
+        "organiser": "test1",
+        "id": "101898721"
+    },
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates that the event does not exist, and
+`2` indicates a malformed request.
 
 ### /events/pending/
-
+To get a users pending events, a `GET` request should be sent with the following
+data:
+```javascript
+{
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+The response will then look like this:
+```javascript
+{
+    "pending_events": [
+        {
+            "name": "Super Mario Kart Party 5",
+            "location": "Marioland",
+            "society": "testsociety",
+            "start": "14605026110490",
+            "end": "14605026110500",
+            "details": "Play some Mario Kart with us",
+            "organiser": "test1",
+            "id": "851133039"
+        },
+        {
+            "name": "Super Mario Kart Party 6",
+            "location": "Marioland",
+            "society": "testsociety",
+            "start": "14605026110490",
+            "end": "14605026110500",
+            "details": "Play some Mario Kart with us",
+            "organiser": "test1",
+            "id": "838450388"
+        },
+        { ... }
+    ],
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates an invalid auth code and `2`
+indicates a malformed request.
 
 ### /events/accept/:eventid
-
+To accept an event, a `POST` request should be sent with the following data:
+```javascript
+{
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+The response will then look like this:
+```javascript
+{
+    "success": 1,
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates an invalid auth code, `2`
+indicates the event could not be found and `3` indicates a malformed request.
 
 ### /events/decline/:eventid
+To decline an event, a `POST` request should be sent with the following data:
+```javascript
+{
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+The response will then look like this:
+```javascript
+{
+    "success": 1,
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates an invalid auth code, `2`
+indicates the event could not be found and `3` indicates a malformed request.
