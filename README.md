@@ -10,21 +10,21 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
     * [Installation](#installation)
     * [Running](#running)
 * [API](#api)
-    * misc
+    * __Misc__
         * [/hello/:name/](#helloname)
-    * user
+    * __User__
         * [/user/register/](#userregister)
         * [/user/auth/](#userauth)
         * [/user/view/](#userview)
         * [/user/view/:user](#userviewuser)
-    * society
+    * __Society__
         * [/society/create/](#societycreate)
         * [/society/view/](#societyview)
         * [/society/view/:society\_name](#societyviewsociety_name)
         * [/society/view/:society\_name/events](#societyviewsociety_nameevents)
         * [/society/join/](#societyjoin)
         * [/society/leave/](#societyleave)
-    * events
+    * __Events__
         * [/events/create/](#eventscreate)
         * [/events/view/:eventid](#eventsvieweventid)
         * [/events/pending/](#eventspending)
