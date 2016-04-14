@@ -40,7 +40,10 @@ module.exports = {
           var username = result;
           var user_query = "user:" + username;
           var users_exist = true;
-          if (admins.indexOf(result) !== -1) {
+          if (username) {
+            admins.push(username);
+          }
+          if (admins.indexOf(username) !== -1) {
             admins.map(function (admin_name, idx, adm) {
               user_controller.user_exists(admin_name, function (exists) {
                 if (!exists) {
@@ -159,6 +162,7 @@ module.exports = {
       }
       for (var ii = 0; ii < society_names.length; ii++) {
         self.get_society(society_names[ii], function(response) {
+          response.society.image = "";
           soc_objects.push(response.society);
           if (soc_objects.length === society_names.length) {
             soc_objects.sort(function(a, b) {
