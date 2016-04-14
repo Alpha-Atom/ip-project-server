@@ -68,7 +68,8 @@ module.exports = {
                              "name": society_name,
                              "admins": admins,
                              "description": description,
-                             "users": admins
+                             "users": admins,
+                             "image": image
                            },
                            "error": 0});
                 } else if (idx === adm.length-1) {
