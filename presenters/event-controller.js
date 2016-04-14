@@ -253,7 +253,7 @@ module.exports = {
     user_controller.get_user_from_auth(auth, function (username) {
       if (username) {
         user_controller.get_public_user_info(username, function (data) {
-          var accepted_events = data.accepted_events;
+          var accepted_events = data.user.accepted_events;
           var accepted_events_objs = [];
           accepted_events.map(function (event_id) {
             self.get_event(event_id, "", function (response) {
@@ -282,7 +282,7 @@ module.exports = {
     user_controller.get_user_from_auth(auth, function (username) {
       if (username) {
         user_controller.get_public_user_info(username, function (data) {
-          var declined_events = data.declined_events;
+          var declined_events = data.user.declined_events;
           var declined_events_objs = [];
           declined_events.map(function (event_id) {
             self.get_event(event_id, "", function (response) {

@@ -440,6 +440,86 @@ The response will then look like this:
 The error codes are as follows, `1` indicates an invalid auth code and `2`
 indicates a malformed request.
 
+### /events/accepted/
+To get a users accepted events, a `GET` request should be sent with the following
+data:
+```javascript
+{
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+The response will then look like this:
+```javascript
+{
+    "accepted_events": [
+        {
+            "name": "Super Mario Kart Party 5",
+            "location": "Marioland",
+            "society": "testsociety",
+            "start": "14605026110490",
+            "end": "14605026110500",
+            "details": "Play some Mario Kart with us",
+            "organiser": "test1",
+            "id": "851133039"
+        },
+        {
+            "name": "Super Mario Kart Party 6",
+            "location": "Marioland",
+            "society": "testsociety",
+            "start": "14605026110490",
+            "end": "14605026110500",
+            "details": "Play some Mario Kart with us",
+            "organiser": "test1",
+            "id": "838450388"
+        },
+        { ... }
+    ],
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates an invalid auth code and `2`
+indicates a malformed request.
+
+### /events/declined/
+To get a users declined events, a `GET` request should be sent with the following
+data:
+```javascript
+{
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+The response will then look like this:
+```javascript
+{
+    "declined_events": [
+        {
+            "name": "Super Mario Kart Party 5",
+            "location": "Marioland",
+            "society": "testsociety",
+            "start": "14605026110490",
+            "end": "14605026110500",
+            "details": "Play some Mario Kart with us",
+            "organiser": "test1",
+            "id": "851133039"
+        },
+        {
+            "name": "Super Mario Kart Party 6",
+            "location": "Marioland",
+            "society": "testsociety",
+            "start": "14605026110490",
+            "end": "14605026110500",
+            "details": "Play some Mario Kart with us",
+            "organiser": "test1",
+            "id": "838450388"
+        },
+        { ... }
+    ],
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates an invalid auth code and `2`
+indicates a malformed request.
+
 ### /events/accept/:eventid
 To accept an event, a `POST` request should be sent with the following data:
 ```javascript

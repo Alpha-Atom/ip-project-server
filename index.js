@@ -22,20 +22,6 @@ app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });
 
-https.createServer({
-   key: prkey,
-   cert: certi
-}, app).listen(3000, function() {
-  console.log("App listening for HTTPS connections on port 3000!");
-});
-
-https.createServer({
-   key: prkey,
-   cert: certi
-}, app).listen(443, function() {
-  console.log("App listening for HTTPS connections on port 3000!");
-});
-
 process.on('SIGINT', function() {
   console.log( "\nRecieved Ctrl-C, shutting down." );
   process.exit(0);

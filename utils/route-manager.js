@@ -13,6 +13,8 @@ var soc_events = require("../routes/events/view-all-society-events.js");
 var event_create = require("../routes/events/create-society-event.js");
 var event_view = require("../routes/events/view-society-events.js");
 var event_pending = require("../routes/events/view-pending-events.js");
+var event_accepted = require("../routes/events/view-accepted-events.js");
+var event_declined = require("../routes/events/view-declined-events.js");
 var event_accept = require("../routes/events/accept-event.js");
 var event_decline = require("../routes/events/decline-event.js");
 var friend_add = require("../routes/friends/add-friend.js");
@@ -36,6 +38,8 @@ router.all('/society/promote/', soc_promote.perform);
 router.all('/events/create/', event_create.perform);
 router.all('/events/view/:eventid', event_view.perform);
 router.all('/events/pending/', event_pending.perform);
+router.all('/events/accepted/', event_accepted.perform);
+router.all('/events/declined/', event_declined.perform);
 router.all('/events/accept/:eventid', event_accept.perform);
 router.all('/events/decline/:eventid', event_decline.perform);
 
