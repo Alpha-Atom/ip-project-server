@@ -64,6 +64,13 @@ Then start the Express framework using:
 node index.js
 ```
 
+A production environment, using HTTPS can be started using:
+```
+node index.js -p
+```
+Do note that this requires both cert.pem and key.pem to be in the root directory
+of the project for SSL or it will not start.
+
 # API
 
 ### /hello/:name/
