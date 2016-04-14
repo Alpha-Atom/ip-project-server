@@ -231,6 +231,15 @@ module.exports = {
               response.event.id = event_id;
               pending_events_objs.push(response.event);
               if (pending_events_objs.length === pending_events.length) {
+                pending_events_objs.sort(function (a,b) {
+                  if (a.start < b.start) {
+                    return -1;
+                  }
+                  if (a.start > b.start) {
+                    return 1;
+                  }
+                  return 0;
+                });
                 complete({
                   "pending_events": pending_events_objs,
                   "error": 0
@@ -260,6 +269,15 @@ module.exports = {
               response.event.id = event_id;
               accepted_events_objs.push(response.event);
               if (accepted_events_objs.length === accepted_events.length) {
+                accepted_events_objs.sort(function (a,b) {
+                  if (a.start < b.start) {
+                    return -1;
+                  }
+                  if (a.start > b.start) {
+                    return 1;
+                  }
+                  return 0;
+                });
                 complete({
                   "accepted_events": accepted_events_objs,
                   "error": 0
@@ -289,6 +307,15 @@ module.exports = {
               response.event.id = event_id;
               declined_events_objs.push(response.event);
               if (declined_events_objs.length === declined_events.length) {
+                declined_events_objs.sort(function (a,b) {
+                  if (a.start < b.start) {
+                    return -1;
+                  }
+                  if (a.start > b.start) {
+                    return 1;
+                  }
+                  return 0;
+                });
                 complete({
                   "declined_events": declined_events_objs,
                   "error": 0
