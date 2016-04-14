@@ -16,8 +16,10 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
+    "file-stream-rotator": "0.0.6",
     "ioredis": "^1.15.1",
     "magic-window": "^1.0.4",
+    "morgan": "^1.7.0",
     "node-schedule": "^1.1.0"
   }
 }
