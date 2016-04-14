@@ -23,7 +23,7 @@ module.exports = {
     });
   },
 
-  create_society: function (soc_name, admins, description, auth, complete) {
+  create_society: function (soc_name, admins, description, image, auth, complete) {
     var society_name = decodeURIComponent(soc_name);
     var soc_query = ("society:" + society_name).toLowerCase();
     admins = decodeURIComponent(admins).toLowerCase();
@@ -52,6 +52,7 @@ module.exports = {
                   redis.hset(soc_query, "description", description);
                   redis.hset(soc_query, "users", admins_str);
                   redis.hset(soc_query, "events", JSON.stringify([]));
+                  redis.hset(soc_query, "image", image);
                   admins.map(function (admin_name) {
                     redis.hget("user:" + admin_name, "societies", function (err, result) {
                       if (result) {
