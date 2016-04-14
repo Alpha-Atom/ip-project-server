@@ -246,5 +246,63 @@ module.exports = {
         });
       }
     });
+  },
+
+  get_all_accepted_events: function (auth, complete) {
+    var self = this;
+    user_controller.get_user_from_auth(auth, function (username) {
+      if (username) {
+        user_controller.get_public_user_info(username, function (data) {
+          var accepted_events = data.accepted_events;
+          var accepted_events_objs = [];
+          accepted_events.map(function (event_id) {
+            self.get_event(event_id, "", function (response) {
+              response.event.id = event_id;
+              accepted_events_objs.push(response.event);
+              if (accepted_events_objs.length === accepted_events.length) {
+                complete({
+                  "accepted_events": accepted_events_objs,
+                  "error": 0
+                });
+              }
+            }, true);
+          });
+        });
+      } else {
+        complete({
+          "accepted_events": [],
+          "error": 1
+        });
+      }
+    });
+  },
+
+  get_all_declined_events: function (auth, complete) {
+    var self = this;
+    user_controller.get_user_from_auth(auth, function (username) {
+      if (username) {
+        user_controller.get_public_user_info(username, function (data) {
+          var declined_events = data.declined_events;
+          var declined_events_objs = [];
+          declined_events.map(function (event_id) {
+            self.get_event(event_id, "", function (response) {
+              response.event.id = event_id;
+              declined_events_objs.push(response.event);
+              if (declined_events_objs.length === declined_events.length) {
+                complete({
+                  "declined_events": declined_events_objs,
+                  "error": 0
+                });
+              }
+            }, true);
+          });
+        });
+      } else {
+        complete({
+          "declined_events": [],
+          "error": 1
+        });
+      }
+    });
   }
 }
