@@ -29,6 +29,8 @@ Server for Integrated Project, powered by Express.js and Redis, listens only on 
         * [/events/create/](#eventscreate)
         * [/events/view/:eventid](#eventsvieweventid)
         * [/events/pending/](#eventspending)
+        * [/events/accepted/](#eventsaccepted)
+        * [/events/declined/](#eventsdeclined)
         * [/events/accept/:eventid](#eventsaccepteventid)
         * [/events/decline/:eventid](#eventsdeclineeventid)
     * __Friends__
