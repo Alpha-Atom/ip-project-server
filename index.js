@@ -16,7 +16,6 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use('/', route_manager);
-app.use('/source', require('extraverse')('/source', { ignore: ['config'] }));
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
