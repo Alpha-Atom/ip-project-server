@@ -21,8 +21,8 @@ var accessLogStream = FileStreamRotator.getStream({
 })
 
 // setup the logger
-app.use(morgan('combined', {stream: accessLogStream}))
-app.use(morgan('combined'));
+app.use(morgan('short', {stream: accessLogStream}))
+app.use(morgan('short'));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
