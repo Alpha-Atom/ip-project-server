@@ -33,6 +33,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
         * [/events/declined/](#eventsdeclined)
         * [/events/accept/:eventid](#eventsaccepteventid)
         * [/events/decline/:eventid](#eventsdeclineeventid)
+        * [/events/cancel/:eventid](#eventscanceleventid)
     * __Friends__
         * [/friends/add/](#friendsadd)
         * [/friends/remove/](#friendsremove)
