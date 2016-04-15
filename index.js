@@ -43,6 +43,10 @@ if (production === "-p") {
   var prkey = fs.readFileSync('key.pem');
   var certi = fs.readFileSync('cert.pem');
 
+  app.listen(80, function() {
+    console.log('Now accepting connections on port 80.');
+  });
+
   https.createServer({
     key: prkey,
     cert: certi

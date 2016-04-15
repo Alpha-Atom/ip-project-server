@@ -2,9 +2,9 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/uses-badges.svg)](http://forthebadge.com)
 
-Server for Integrated Project, powered by Express.js and Redis, listens only on HTTPS now, currently using a self-signed cert, will have to play with trust authorities on the ionic side. Also at the moment server responds to `ALL` requests, cause it's easier to do testing with `GET`, will also set up unit tests in good time. Everything in the API documentation is working as described.
+Server for Integrated Project, powered by Express.js and Redis, listens for HTTPS requests on port 443 and HTTP requests on port 80 and port 3000. Certificate provided for free by the brilliant __[Lets Encrypt!](https://letsencrypt.org/)__ project. At the moment server responds to `ALL` requests, cause it's easier to do testing with `GET`, will possibly set up unit tests in good time. Everything in the API documentation is working as described.
 
-![HTTPS Screenshot](http://i.imgur.com/lQHnE3V.png "HTTPS Hello World")
+![HTTPS Screenshot](http://i.imgur.com/jPfO0Fv.png "HTTPS Hello World")
 
 * [ip-project-server](#ip-project-server)
     * [Installation](#installation)
