@@ -3,12 +3,15 @@ var serveIndex = require('serve-index');
 var https = require('https');
 var app = express();
 var route_manager = require("./utils/route-manager.js");
+var scheduler = require("./presenters/schedule-controller.js");
 var bodyParser = require('body-parser');
 var FileStreamRotator = require('file-stream-rotator');
 var morgan = require('morgan');
 var fs = require('fs');
 var logDirectory = 'log'
 var production = process.argv[2];
+
+scheduler.register_existing_events();
 
 // ensure log directory exists
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)

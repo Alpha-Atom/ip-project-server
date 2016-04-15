@@ -28,7 +28,6 @@ module.exports = {
     var soc_query = ("society:" + society_name).toLowerCase();
     admins = decodeURIComponent(admins).toLowerCase();
     description = decodeURIComponent(description);
-    var admins_str = admins;
     admins = JSON.parse(admins);
 
     redis.hget(soc_query, "name", function (err, result) {
@@ -51,9 +50,9 @@ module.exports = {
                 }
                 if (idx === adm.length-1 && users_exist) {
                   redis.hset(soc_query, "name", society_name);
-                  redis.hset(soc_query, "admins", admins_str);
+                  redis.hset(soc_query, "admins", JSON.stringify(admins));
                   redis.hset(soc_query, "description", description);
-                  redis.hset(soc_query, "users", admins_str);
+                  redis.hset(soc_query, "users", JSON.stringify(admins));
                   redis.hset(soc_query, "events", JSON.stringify([]));
                   redis.hset(soc_query, "image", image);
                   admins.map(function (admin_name) {

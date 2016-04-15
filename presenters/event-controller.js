@@ -3,6 +3,7 @@ var redis = new Redis();
 var permissions_controller = require("./permissions-controller.js");
 var user_controller = require("./user-controller.js");
 var society_controller = require("./society-controller.js");
+var scheduler = require("./schedule-controller.js");
 
 module.exports = {
   create_event: function (soc_name, event, auth, complete) {
@@ -27,6 +28,7 @@ module.exports = {
               redis.hget(soc_query, "events", function (err, events) {
                 redis.hset(soc_query, "events", JSON.stringify(JSON.parse(events).concat(event_id)));
               });
+              scheduler.schedule_event(event_id, event.start);
               complete({
                 "success": 1,
                 "event": {
@@ -71,7 +73,6 @@ module.exports = {
               var soc_events = soc_resp.society.events;
               var completed_count = 1;
               if (soc_events.indexOf(event_id) > -1) {
-                console.log(soc_events.indexOf(event_id));
                 soc_events.splice(soc_events.indexOf(event_id), 1);
                 redis.hset("society:" + soc_resp.society.name.toLowerCase(), "events", JSON.stringify(soc_events));
               }
@@ -98,6 +99,7 @@ module.exports = {
                   }
                   completed_count++;
                   if (completed_count === users.length) {
+                    scheduler.cancel_registered(event_id);
                     complete({
                       "success": 1,
                       "error": 0

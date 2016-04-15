@@ -41,7 +41,6 @@ module.exports = {
   },
 
   get_raw_user: function (user, complete) {
-    console.warn("WARNING: Accessing raw user info, use with care and do not expose to API endpoints.");
     var user_key = "user:" + user;
 
     redis.hgetall(user_key, function(err, result) {
