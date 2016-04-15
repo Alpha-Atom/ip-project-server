@@ -46,8 +46,71 @@ module.exports = {
           } else {
             complete({
               "success": 0,
-              "error": 2
+              "error": 1
             })
+          }
+        });
+      } else {
+        complete({
+          "success": 0,
+          "error": 2
+        });
+      }
+    });
+  },
+
+  cancel_event: function (event_id, auth, complete, force) {
+    var self = this;
+    self.get_event(event_id, auth, function (response) {
+      if (response) {
+        var event = response.event;
+        permissions_controller.user_can_manage_soc_events(auth, event.society, function (manageable) {
+          if (manageable || force) {
+            society_controller.get_society(event.society, function (soc_resp) {
+              var users = soc_resp.society.users;
+              var soc_events = soc_resp.society.events;
+              var completed_count = 1;
+              if (soc_events.indexOf(event_id) > -1) {
+                console.log(soc_events.indexOf(event_id));
+                soc_events.splice(soc_events.indexOf(event_id), 1);
+                redis.hset("society:" + soc_resp.society.name.toLowerCase(), "events", JSON.stringify(soc_events));
+              }
+              redis.del("event:" + event_id);
+              users.map(function (user) {
+                user_controller.get_raw_user(user, function (userdata) {
+                  var pending_events = JSON.parse(userdata.pending_events);
+                  var accepted_events = JSON.parse(userdata.accepted_events);
+                  var declined_events = JSON.parse(userdata.declined_events);
+                  var pending_idx = pending_events.indexOf(event_id);
+                  var accepted_idx = accepted_events.indexOf(event_id);
+                  var declined_idx = declined_events.indexOf(event_id);
+                  if (pending_idx > -1) {
+                    pending_events.splice(pending_idx, 1);
+                    redis.hset("user:" + user, "pending_events", JSON.stringify(pending_events));
+                  }
+                  if (accepted_idx > -1) {
+                    accepted_events.splice(accepted_idx, 1);
+                    redis.hset("user:" + user, "accepted_events", JSON.stringify(accepted_events));
+                  }
+                  if (declined_idx > -1) {
+                    declined_events.splice(declined_idx, 1);
+                    redis.hset("user:" + user, "declined_events", JSON.stringify(declined_events));
+                  }
+                  completed_count++;
+                  if (completed_count === users.length) {
+                    complete({
+                      "success": 1,
+                      "error": 0
+                    });
+                  }
+                });
+              });
+            });
+          } else {
+            complete({
+              "success": 0,
+              "error": 2
+            });
           }
         });
       } else {
@@ -56,11 +119,7 @@ module.exports = {
           "error": 1
         });
       }
-    });
-  },
-
-  cancel_event: function (event_id, auth, complete, force) {
-
+    }, force);
   },
 
   invite_all: function (soc_name, event_id) {
@@ -75,16 +134,25 @@ module.exports = {
 
   get_event: function (event_id, auth, complete, preauth) {
     redis.hgetall("event:" + event_id, function (err, event) {
-      event.attendees = JSON.parse(event.attendees);
       if (preauth) {
-        complete({
-          "event": event,
-          "error": 0
-        });
-        return;
+        if (event) {
+          event.attendees = JSON.parse(event.attendees);
+          complete({
+            "event": event,
+            "error": 0
+          });
+          return;
+        } else {
+          complete({
+            "event": {},
+            "error": 1
+          });
+          return;
+        }
       }
       permissions_controller.user_is_in_society(auth, event.society, function (canview) {
         if (canview) {
+          event.attendees = JSON.parse(event.attendees);
           complete({
             "event": event,
             "error": 0

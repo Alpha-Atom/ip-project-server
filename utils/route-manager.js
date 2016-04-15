@@ -17,6 +17,7 @@ var event_accepted = require("../routes/events/view-accepted-events.js");
 var event_declined = require("../routes/events/view-declined-events.js");
 var event_accept = require("../routes/events/accept-event.js");
 var event_decline = require("../routes/events/decline-event.js");
+var event_cancel = require("../routes/events/cancel-event.js");
 var friend_add = require("../routes/friends/add-friend.js");
 var friend_remove = require("../routes/friends/remove-friend.js");
 
@@ -42,6 +43,7 @@ router.all('/events/accepted/', event_accepted.perform);
 router.all('/events/declined/', event_declined.perform);
 router.all('/events/accept/:eventid', event_accept.perform);
 router.all('/events/decline/:eventid', event_decline.perform);
+router.all('/events/cancel/:eventid', event_cancel.perform);
 
 router.all('/friends/add/', friend_add.perform);
 router.all('/friends/remove/', friend_remove.perform);
