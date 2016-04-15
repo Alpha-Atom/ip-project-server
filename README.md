@@ -370,6 +370,7 @@ The response will look like this:
         "id": "101898721",
         "name": "Super Mario Kart Party",
         "organiser": "test1",
+        "attendees": [],
         "location": "Marioland",
         "society": "TestSociety",
         "start": "14605026110490",
@@ -401,6 +402,10 @@ The response will then look like this:
         "end": "14605026110500",
         "details": "Play some Mario Kart with us",
         "organiser": "test1",
+        "attendees": [
+            "test1",
+            "test2"
+        ],
         "id": "101898721"
     },
     "error": 0
@@ -429,6 +434,10 @@ The response will then look like this:
             "end": "14605026110500",
             "details": "Play some Mario Kart with us",
             "organiser": "test1",
+            "attendees": [
+                "test1",
+                "test2"
+            ],
             "id": "851133039"
         },
         {
@@ -439,6 +448,10 @@ The response will then look like this:
             "end": "14605026110500",
             "details": "Play some Mario Kart with us",
             "organiser": "test1",
+            "attendees": [
+                "test1",
+                "test2"
+            ],
             "id": "838450388"
         },
         { ... }
@@ -469,6 +482,10 @@ The response will then look like this:
             "end": "14605026110500",
             "details": "Play some Mario Kart with us",
             "organiser": "test1",
+            "attendees": [
+                "test1",
+                "test2"
+            ],
             "id": "851133039"
         },
         {
@@ -479,6 +496,10 @@ The response will then look like this:
             "end": "14605026110500",
             "details": "Play some Mario Kart with us",
             "organiser": "test1",
+            "attendees": [
+                "test1",
+                "test2"
+            ],
             "id": "838450388"
         },
         { ... }
@@ -509,6 +530,10 @@ The response will then look like this:
             "end": "14605026110500",
             "details": "Play some Mario Kart with us",
             "organiser": "test1",
+            "attendees": [
+                "test1",
+                "test2"
+            ],
             "id": "851133039"
         },
         {
@@ -519,6 +544,10 @@ The response will then look like this:
             "end": "14605026110500",
             "details": "Play some Mario Kart with us",
             "organiser": "test1",
+            "attendees": [
+                "test1",
+                "test2"
+            ],
             "id": "838450388"
         },
         { ... }

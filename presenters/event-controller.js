@@ -22,6 +22,7 @@ module.exports = {
               redis.hset(event_query, "end", event.end);
               redis.hset(event_query, "details", event.details);
               redis.hset(event_query, "organiser", organiser);
+              redis.hset(event_query, "attendees", JSON.stringify([]));
               redis.hset(event_query, "id", event_id);
               redis.hget(soc_query, "events", function (err, events) {
                 redis.hset(soc_query, "events", JSON.stringify(JSON.parse(events).concat(event_id)));
@@ -32,6 +33,7 @@ module.exports = {
                   "id": event_id,
                   "name": event.name,
                   "organiser": organiser,
+                  "attendees": [],
                   "location": event.location,
                   "society": soc_name,
                   "start": event.start,
@@ -57,6 +59,10 @@ module.exports = {
     });
   },
 
+  cancel_event: function (event_id, auth, complete, force) {
+
+  },
+
   invite_all: function (soc_name, event_id) {
     society_controller.get_society(soc_name, function (response) {
       response.society.users.map(function (user) {
@@ -69,6 +75,7 @@ module.exports = {
 
   get_event: function (event_id, auth, complete, preauth) {
     redis.hgetall("event:" + event_id, function (err, event) {
+      event.attendees = JSON.parse(event.attendees);
       if (preauth) {
         complete({
           "event": event,
@@ -138,36 +145,42 @@ module.exports = {
   },
 
   accept_event: function (event_id, auth, complete) {
+    var self = this;
     user_controller.get_user_from_auth(auth, function (username) {
       if (username) {
         user_controller.get_raw_user(username, function (userdata) {
           var pending_events = JSON.parse(userdata.pending_events);
           var declined_events = JSON.parse(userdata.declined_events);
           var accepted_events = JSON.parse(userdata.accepted_events);
-          if (pending_events.indexOf(event_id) > -1) {
-            pending_events.splice(pending_events.indexOf(event_id), 1);
-            accepted_events.push(event_id);
-            redis.hset("user:" + username, "pending_events", JSON.stringify(pending_events));
-            redis.hset("user:" + username, "accepted_events", JSON.stringify(accepted_events));
-            complete({
-              "success": 1,
-              "error": 0
-            });
-          } else if (declined_events.indexOf(event_id) > -1) {
-            declined_events.splice(declined_events.indexOf(event_id), 1);
-            accepted_events.push(event_id);
-            redis.hset("user:" + username, "declined_events", JSON.stringify(declined_events));
-            redis.hset("user:" + username, "accepted_events", JSON.stringify(accepted_events));
-            complete({
-              "success": 1,
-              "error": 0
-            });
-          } else {
-            complete({
-              "success": 0,
-              "error": 2
-            });
-          }
+          self.get_event(event_id, auth, function (data) {
+            var attendees = data.event.attendees;
+            if (pending_events.indexOf(event_id) > -1) {
+              pending_events.splice(pending_events.indexOf(event_id), 1);
+              accepted_events.push(event_id);
+              redis.hset("user:" + username, "pending_events", JSON.stringify(pending_events));
+              redis.hset("user:" + username, "accepted_events", JSON.stringify(accepted_events));
+              redis.hset("event:" + event_id, "attendees", JSON.stringify(attendees.concat(username.toLowerCase())));
+              complete({
+                "success": 1,
+                "error": 0
+              });
+            } else if (declined_events.indexOf(event_id) > -1) {
+              declined_events.splice(declined_events.indexOf(event_id), 1);
+              accepted_events.push(event_id);
+              redis.hset("user:" + username, "declined_events", JSON.stringify(declined_events));
+              redis.hset("user:" + username, "accepted_events", JSON.stringify(accepted_events));
+              redis.hset("event:" + event_id, "attendees", JSON.stringify(attendees.concat(username.toLowerCase())));
+              complete({
+                "success": 1,
+                "error": 0
+              });
+            } else {
+              complete({
+                "success": 0,
+                "error": 2
+              });
+            }
+          });
         });
       } else {
         complete({
@@ -179,6 +192,7 @@ module.exports = {
   },
 
   decline_event: function (event_id, auth, complete) {
+    var self = this;
     user_controller.get_user_from_auth(auth, function (username) {
       if (username) {
         user_controller.get_raw_user(username, function (userdata) {
@@ -195,14 +209,19 @@ module.exports = {
               "error": 0
             });
           } else if (accepted_events.indexOf(event_id) > -1) {
-            accepted_events.splice(accepted_events.indexOf(event_id), 1);
-            declined_events.push(event_id);
-            redis.hset("user:" + username, "accepted_events", JSON.stringify(accepted_events));
-            redis.hset("user:" + username, "declined_events", JSON.stringify(declined_events));
-            complete({
-              "success": 1,
-              "error": 0
-            });
+            self.get_event(event_id, auth, function (data) {
+              var attendees = data.event.attendees;
+              attendees.splice(attendees.indexOf(event_id), 1);
+              accepted_events.splice(accepted_events.indexOf(event_id), 1);
+              declined_events.push(event_id);
+              redis.hset("user:" + username, "accepted_events", JSON.stringify(accepted_events));
+              redis.hset("user:" + username, "declined_events", JSON.stringify(declined_events));
+              redis.hset("event:" + event_id, "attendees", JSON.stringify(attendees));
+              complete({
+                "success": 1,
+                "error": 0
+              });
+            })
           } else {
             complete({
               "success": 0,
