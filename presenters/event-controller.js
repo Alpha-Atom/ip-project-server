@@ -137,7 +137,7 @@ module.exports = {
   get_event: function (event_id, auth, complete, preauth) {
     redis.hgetall("event:" + event_id, function (err, event) {
       if (preauth) {
-        if (event) {
+        if (event.name) {
           event.attendees = JSON.parse(event.attendees);
           complete({
             "event": event,

@@ -23,7 +23,7 @@ module.exports = {
     var event_ids = [];
     stream.on('data', function (keys) {
       keys.map(function (key) {
-        event_ids.push(key);
+        event_ids.push(key.split(":")[1]);
       });
     })
     stream.on('end', function () {
