@@ -20,6 +20,7 @@
     "ioredis": "^1.15.1",
     "magic-window": "^1.0.4",
     "morgan": "^1.7.0",
-    "node-schedule": "^1.1.0"
+    "node-schedule": "^1.1.0",
+    "serve-index": "^1.7.3"
   }
 }
