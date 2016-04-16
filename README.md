@@ -1,4 +1,4 @@
-# ip-project-server
+# uni-society-manager
 
 [![forthebadge](http://forthebadge.com/images/badges/uses-badges.svg)](http://forthebadge.com)
 
@@ -6,7 +6,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
 
 ![HTTPS Screenshot](http://i.imgur.com/jPfO0Fv.png "HTTPS Hello World")
 
-* [ip-project-server](#ip-project-server)
+* [uni-society-manager](#uni-society-manager)
     * [Installation](#installation)
     * [Running](#running)
 * [API](#api)
