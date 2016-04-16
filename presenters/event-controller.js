@@ -27,6 +27,7 @@ module.exports = {
               redis.hset(event_query, "id", event_id);
               redis.hget(soc_query, "events", function (err, events) {
                 redis.hset(soc_query, "events", JSON.stringify(JSON.parse(events).concat(event_id)));
+                self.accept_event(event_id, auth, function() {});
               });
               scheduler.schedule_event(event_id, event.start);
               complete({
@@ -35,7 +36,7 @@ module.exports = {
                   "id": event_id,
                   "name": event.name,
                   "organiser": organiser,
-                  "attendees": [],
+                  "attendees": [organiser],
                   "location": event.location,
                   "society": soc_name,
                   "start": event.start,
