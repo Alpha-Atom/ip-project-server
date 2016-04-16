@@ -5,13 +5,34 @@ var app = express();
 var route_manager = require("./utils/route-manager.js");
 var scheduler = require("./presenters/schedule-controller.js");
 var bodyParser = require('body-parser');
+var basic_auth = require('basic-auth');
 var FileStreamRotator = require('file-stream-rotator');
 var morgan = require('morgan');
 var fs = require('fs');
 var logDirectory = 'log'
+var log_passwd = fs.readFileSync('logpasswd');
 var production = process.argv[2];
 
 scheduler.register_existing_events();
+
+var auth = function (req, res, next) {
+  function unauthorized(res) {
+    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+    return res.send(401);
+  };
+
+  var user = basicAuth(req);
+
+  if (!user || !user.name || !user.pass) {
+    return unauthorized(res);
+  };
+
+  if (user.name === 'admin' && user.pass === log_passwd) {
+    return next();
+  } else {
+    return unauthorized(res);
+  };
+};
 
 // ensure log directory exists
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
