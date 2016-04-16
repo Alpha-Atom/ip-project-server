@@ -21,16 +21,26 @@ module.exports = {
 
     redis.hgetall(user_key, function(err, result) {
       if (result.password) {
+
         var public = {};
         public.username = user;
         public.societies = JSON.parse(result.societies) || [];
-        public.friends = JSON.parse(result.friends) || [];
-        public.accepted_events = JSON.parse(result.accepted_events) || [];
-        public.declined_events = JSON.parse(result.declined_events) || [];
-        complete({
-          "user": public,
-          "error": 0
-        });
+        var society_controller = require("./society-controller.js");
+        var soc_names = [];
+        for (var ii = 0; ii < societies.length; ii++) {
+          society_controller.get_society(societies[ii], function (response) {
+            soc_names.push(response.society.name);
+            if (soc_names.length === societies.length) {
+              public.friends = JSON.parse(result.friends) || [];
+              public.accepted_events = JSON.parse(result.accepted_events) || [];
+              public.declined_events = JSON.parse(result.declined_events) || [];
+              complete({
+                "user": public,
+                "error": 0
+              });
+            }
+          });
+        }
       } else {
         complete({
           "user": {},
