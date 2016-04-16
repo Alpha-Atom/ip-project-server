@@ -27,7 +27,7 @@ module.exports = {
               redis.hset(event_query, "id", event_id);
               redis.hget(soc_query, "events", function (err, events) {
                 redis.hset(soc_query, "events", JSON.stringify(JSON.parse(events).concat(event_id)));
-                self.accept_event(event_id, auth, function() {});
+                setTimeout(function(){self.accept_event(event_id, auth, function() {})}, 1500);
               });
               scheduler.schedule_event(event_id, event.start);
               complete({
