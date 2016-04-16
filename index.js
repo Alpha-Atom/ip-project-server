@@ -27,7 +27,7 @@ var auth = function (req, res, next) {
     return unauthorized(res);
   };
 
-  if (user.name === 'logs' && user.pass === log_passwd) {
+  if (user.name === 'logs' && user.pass === log_passwd.trim()) {
     return next();
   } else {
     return unauthorized(res);
