@@ -21,13 +21,13 @@ var auth = function (req, res, next) {
     return res.send(401);
   };
 
-  var user = basicAuth(req);
+  var user = basic_auth(req);
 
   if (!user || !user.name || !user.pass) {
     return unauthorized(res);
   };
 
-  if (user.name === 'admin' && user.pass === log_passwd) {
+  if (user.name === 'logs' && user.pass === log_passwd) {
     return next();
   } else {
     return unauthorized(res);
