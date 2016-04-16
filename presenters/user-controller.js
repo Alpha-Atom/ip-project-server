@@ -27,10 +27,10 @@ module.exports = {
         public.societies = JSON.parse(result.societies) || [];
         var society_controller = require("./society-controller.js");
         var soc_names = [];
-        for (var ii = 0; ii < societies.length; ii++) {
-          society_controller.get_society(societies[ii], function (response) {
+        for (var ii = 0; ii < public.societies.length; ii++) {
+          society_controller.get_society(public.societies[ii], function (response) {
             soc_names.push(response.society.name);
-            if (soc_names.length === societies.length) {
+            if (soc_names.length === public.societies.length) {
               public.friends = JSON.parse(result.friends) || [];
               public.accepted_events = JSON.parse(result.accepted_events) || [];
               public.declined_events = JSON.parse(result.declined_events) || [];
