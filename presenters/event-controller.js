@@ -143,7 +143,7 @@ module.exports = {
         });
       });
     });
-  }
+  },
 
   get_event: function (event_id, auth, complete, preauth) {
     redis.hgetall("event:" + event_id, function (err, event) {
