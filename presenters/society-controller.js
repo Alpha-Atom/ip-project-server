@@ -59,9 +59,9 @@ module.exports = {
                     redis.hget("user:" + admin_name, "societies", function (err, result) {
                       if (result) {
                         result = JSON.parse(result);
-                        redis.hset("user:" + admin_name, "societies", JSON.stringify(result.concat(society_name)));
+                        redis.hset("user:" + admin_name, "societies", JSON.stringify(result.concat(society_name.toLowerCase())));
                       } else {
-                        redis.hset("user:" + admin_name, "societies", JSON.stringify([society_name]));
+                        redis.hset("user:" + admin_name, "societies", JSON.stringify([society_name.toLowerCase()]));
                       }
                     });
                   });
@@ -178,6 +178,38 @@ module.exports = {
     });
   },
 
+  kick_user: function (user, soc_name, auth, complete) {
+    var self = this;
+    permissions_controller.user_can_manage_society(auth, soc_name, function (isadmin) {
+      if (isadmin) {
+        user_controller.get_raw_user(user.toLowerCase(), function (result) {
+          if (result["auth-key"]) {
+            permissions_controller.user_can_manage_society(result["auth-key"], soc_name, function (admin) {
+              if (admin) {
+                complete({
+                  "success": 0,
+                  "error": 3
+                });
+              } else {
+                self.leave_society(soc_name, result["auth-key"], complete);
+              }
+            });
+          } else {
+            complete({
+              "success": 0,
+              "error": 2
+            });
+          }
+        });
+      } else {
+        complete({
+          "success": 0,
+          "error": 1
+        });
+      }
+    });
+  },
+
   leave_society: function (soc_name, auth, complete) {
     permissions_controller.user_is_in_society(auth, soc_name, function(user_in_soc) {
       if (user_in_soc) {
@@ -254,12 +286,12 @@ module.exports = {
                     "error": 3
                   });
                 } else {
-                redis.hset("society:" + soc_name.toLowerCase(), "admins", JSON.stringify(result.concat(promotee)));
-                complete({
-                  "success": 1,
-                  "error": 0
-                });
-              }
+                  redis.hset("society:" + soc_name.toLowerCase(), "admins", JSON.stringify(result.concat(promotee)));
+                  complete({
+                    "success": 1,
+                    "error": 0
+                  });
+                }
               }else {
                 console.error("Error could not find admin list in society.");
               }

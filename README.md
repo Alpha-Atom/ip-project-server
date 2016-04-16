@@ -25,6 +25,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
         * [/society/join/](#societyjoin)
         * [/society/leave/](#societyleave)
         * [/society/promote/](#societypromote)
+        * [/society/kick/](#societykick)
     * __Events__
         * [/events/create/](#eventscreate)
         * [/events/view/:eventid](#eventsvieweventid)
@@ -346,6 +347,27 @@ The response will then be formed as follows:
 The error codes are as follows, `1` indicates that the auth key is invalid, `2`
 indicates that the user does not belong to the society, `3` indicates that the
 user is already an admin and `4` indicates a malformed request.
+
+### /society/kick/
+To kick a user from a society, a `POST` request should be sent with the
+following data:
+```javascript
+{
+    "user": "Test3",
+    "society": "TestSociety",
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+The response will then be formed as follows:
+```javascript
+{
+    "success": 1,
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates that the auth key is invalid, `2`
+indicates that the user does not belong to the society, `3` indicates that the
+user is an admin therefore cannot be kicked and `4` indicates a malformed request.
 
 ### /events/create/
 To create a new event, a `POST` request should be sent with the following data:
