@@ -132,6 +132,8 @@ module.exports = {
             redis.hset(("society:" + soc_name).toLowerCase(), "users", JSON.stringify(users_result.concat(username)));
           });
         });
+        var event_controller = require("./event-controller.js");
+        event_controller.invite_new_user(soc_name, username);
         complete({
           "success": 1,
           "error": 0

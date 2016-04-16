@@ -135,6 +135,16 @@ module.exports = {
     });
   },
 
+  invite_new_user: function (soc_name, user) {
+    society_controller.get_society(soc_name, function (response) {
+      response.society.events.map(function (event_id) {
+        user_controller.get_raw_user(user.toLowerCase(), function (userdata) {
+          redis.hset("user:" + user.toLowerCase(), "pending_events", JSON.stringify(JSON.parse(userdata.pending_events).concat(event_id)));
+        });
+      });
+    });
+  }
+
   get_event: function (event_id, auth, complete, preauth) {
     redis.hgetall("event:" + event_id, function (err, event) {
       if (preauth) {
