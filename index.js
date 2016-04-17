@@ -10,8 +10,10 @@ var FileStreamRotator = require('file-stream-rotator');
 var morgan = require('morgan');
 var fs = require('fs');
 var logDirectory = 'log'
-var log_passwd = fs.readFileSync('logpasswd', 'utf-8');
 var production = process.argv[2];
+if (production === "-p") {
+  var log_passwd = fs.readFileSync('logpasswd', 'utf-8');
+}
 
 scheduler.register_existing_events();
 
