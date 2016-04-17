@@ -4,7 +4,9 @@
   "description": "Server for the IP project",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine-node --verbose --captureExceptions spec; node utils/flushdb.js"
+    "pretest": "node index.js &",
+    "test": "sleep 2; jasmine-node --verbose --captureExceptions spec; node utils/flushdb.js",
+    "posttest": "killall node"
   },
   "repository": {
     "type": "git",
