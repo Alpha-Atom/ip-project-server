@@ -2,7 +2,7 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/uses-badges.svg)](http://forthebadge.com)
 
-Server for Integrated Project, powered by Express.js and Redis, listens for HTTPS requests on port 443 and HTTP requests on port 80 and port 3000. Certificate provided for free by the brilliant __[Lets Encrypt!](https://letsencrypt.org/)__ project. At the moment server responds to `ALL` requests, cause it's easier to do testing with `GET`, will possibly set up unit tests in good time. Everything in the API documentation is working as described.
+Server for Integrated Project, powered by Express.js and Redis, listens for HTTPS requests on port 443 and HTTP requests on port 80 and port 3000. Certificate provided for free by the brilliant __[Lets Encrypt!](https://letsencrypt.org/)__ project. At the moment server responds to `ALL` requests, cause it's easier to do testing with `GET`, routes with a ✓ next to them are tested on each commit with __[Travis CI](https://travis-ci.org/)__. Other routes are either so trivial that testing is not necessary, see `/hello/:name/` or have simply been tested by a human as unit tests have not yet been written.
 
 ![HTTPS Screenshot](http://i.imgur.com/HUOTv2o.png "HTTPS Hello World")
 
@@ -14,7 +14,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
     * __Misc__
         * [/hello/:name/](#helloname)
     * __User__
-        * [/user/register/](#userregister)
+        * [/user/register/](#userregister) ✓
         * [/user/auth/](#userauth)
         * [/user/view/](#userview)
         * [/user/view/:user](#userviewuser)
