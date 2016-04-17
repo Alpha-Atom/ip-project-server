@@ -1,4 +1,4 @@
-# uni-society-manager
+# uni-society-manager [![travisbadge](https://travis-ci.org/Alpha-Atom/uni-society-manager.svg)](https://travis-ci.org/Alpha-Atom/uni-society-manager/builds)
 
 [![forthebadge](http://forthebadge.com/images/badges/uses-badges.svg)](http://forthebadge.com)
 
