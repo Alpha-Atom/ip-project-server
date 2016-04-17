@@ -9,6 +9,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
 * [uni-society-manager](#uni-society-manager)
     * [Installation](#installation)
     * [Running](#running)
+    * [Testing](#testing)
 * [API](#api)
     * __Misc__
         * [/hello/:name/](#helloname)
@@ -72,6 +73,27 @@ node index.js -p
 ```
 Do note that this requires both cert.pem and key.pem to be in the root directory
 of the project for SSL or it will not start.
+
+### Testing
+To test, start a __new__ Redis server somewhere other than the main database
+with:
+```
+redis-server
+```
+
+Then start up the Express framework using:
+```
+node index.js
+```
+You do not need to use the production environment for this.
+
+Finally run the tests with:
+```
+npm test
+```
+__DO NOT__ run `npm test` whilst the main database is running the testing command
+flushes the database at the end of the test and this will occur regardless of
+test passes or failures.
 
 # API
 

@@ -4,7 +4,7 @@
   "description": "Server for the IP project",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "jasmine-node --verbose --captureExceptions spec; node utils/flushdb.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,10 @@
     "magic-window": "^1.0.4",
     "morgan": "^1.7.0",
     "node-schedule": "^1.1.0",
+    "request": "^2.71.0",
     "serve-index": "^1.7.3"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
   }
 }

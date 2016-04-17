@@ -1,8 +1,6 @@
 var Redis = require("ioredis");
 var redis = new Redis();
 
-module.exports = {
-  flush: function () {
-    redis.flushdb();
-  }
-}
+redis.flushdb();
+console.log("Database flushed!");
+setTimeout(function() {process.exit(0)}, 1000);
