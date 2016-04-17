@@ -91,8 +91,8 @@ Finally run the tests with:
 ```
 npm test
 ```
-__DO NOT__ run `npm test` whilst the main database is running the testing command
-flushes the database at the end of the test and this will occur regardless of
+__DO NOT__ run `npm test` whilst the main database is running on `localhost:6379/0`. The testing command
+flushes that database at the end of the tests and this will occur regardless of
 test passes or failures.
 
 # API
