@@ -1,6 +1,6 @@
 # uni-society-manager [![travisbadge](https://travis-ci.org/Alpha-Atom/uni-society-manager.svg)](https://travis-ci.org/Alpha-Atom/uni-society-manager/builds) ![dankmeme](https://img.shields.io/badge/contains-dank%20memes-brightgreen.svg)
 
-Server for Integrated Project, powered by Express.js and Redis, listens for HTTPS requests on port 443 and HTTP requests on port 80 and port 3000. Certificate provided for free by the brilliant __[Lets Encrypt!](https://letsencrypt.org/)__ project. Routes with a ✓ next to them are tested on each commit with __[Travis CI](https://travis-ci.org/)__. Other routes are either so trivial that testing is not necessary, see `/hello/:name/` or have simply been tested by a human as unit tests have not yet been written.
+Server for Integrated Project, powered by Express.js and Redis, listens for HTTPS requests on port 443 and HTTP requests on port 80 and port 3000. Certificate provided for free by the brilliant __[Lets Encrypt!](https://letsencrypt.org/)__ project. Unit tests are run on each commit with __[Travis CI](https://travis-ci.org/)__. Results of these tests can be viewed by clicking the build passing/failing badge.
 
 ![HTTPS Screenshot](http://i.imgur.com/HUOTv2o.png "HTTPS Hello World")
 
@@ -12,7 +12,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
     * __Misc__
         * [/hello/:name/](#helloname)
     * __User__
-        * [/user/register/](#userregister) ✓
+        * [/user/register/](#userregister)
         * [/user/auth/](#userauth)
         * [/user/view/](#userview)
         * [/user/view/:user](#userviewuser)
