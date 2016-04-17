@@ -117,4 +117,42 @@ describe("User Operations", function () {
     });
   }); //end POST /user/auth/
 
-});
+  describe("GET /user/view/:user", function () {
+    it("gets an individual user that exists", function (done) {
+      request(base_url + "/user/view/foo123", function (error, response, body) {
+        body = JSON.parse(body);
+        expect(response.statusCode).toBe(200);
+        expect(body.user).not.toBe(null);
+        expect(typeof body.user).toBe("object");
+        expect(body.user.username).toBe("foo123");
+        expect(Array.isArray(body.user.societies)).toBe(true);
+        expect(Array.isArray(body.user.friends)).toBe(true);
+        expect(Array.isArray(body.user.accepted_events)).toBe(true);
+        expect(Array.isArray(body.user.declined_events)).toBe(true);
+        expect(body.error).toBe(0);
+        done();
+      });
+    });
+
+    it("does not get users that do not exist", function (done) {
+      request(base_url + "/user/view/foo1233", function (error, response, body) {
+        body = JSON.parse(body);
+        expect(response.statusCode).toBe(200);
+        expect(Object.keys(body.user).length).toBe(0);
+        expect(JSON.stringify(body.user)).toEqual(JSON.stringify({}));
+        expect(body.error).toBe(1);
+        done();
+      });
+    });
+
+    it("gets all users in the system", function (done) {
+      request(base_url + "/user/view/", function (error, response, body) {
+        body = JSON.parse(body);
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(body.users)).toBe(true);
+        done();
+      });
+    });
+  }); //end GET /user/view/:user
+
+}); //end user ops

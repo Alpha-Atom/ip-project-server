@@ -42,6 +42,15 @@ module.exports = {
             }
           });
         }
+        if (public.societies.length === 0) {
+          public.friends = JSON.parse(result.friends) || [];
+          public.accepted_events = JSON.parse(result.accepted_events) || [];
+          public.declined_events = JSON.parse(result.declined_events) || [];
+          complete({
+            "user": public,
+            "error": 0
+          });
+        }
       } else {
         complete({
           "user": {},
