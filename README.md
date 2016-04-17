@@ -4,7 +4,7 @@
 
 Server for Integrated Project, powered by Express.js and Redis, listens for HTTPS requests on port 443 and HTTP requests on port 80 and port 3000. Certificate provided for free by the brilliant __[Lets Encrypt!](https://letsencrypt.org/)__ project. At the moment server responds to `ALL` requests, cause it's easier to do testing with `GET`, will possibly set up unit tests in good time. Everything in the API documentation is working as described.
 
-![HTTPS Screenshot](http://i.imgur.com/jPfO0Fv.png "HTTPS Hello World")
+![HTTPS Screenshot](http://i.imgur.com/HUOTv2o.png "HTTPS Hello World")
 
 * [uni-society-manager](#uni-society-manager)
     * [Installation](#installation)
