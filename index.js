@@ -59,8 +59,10 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use('/', route_manager);
 app.use('/source', require('magic-window')('/source', { ignore: ['config', 'redis', 'cert.pem', 'key.pem', 'dump.rdb', 'logpasswd'] }))
-app.use('/log', auth, express.static('log'));
-app.use('/log', auth, serveIndex('log', {'icons': true}));
+if (production === "-p") {
+  app.use('/log', auth, express.static('log'));
+  app.use('/log', auth, serveIndex('log', {'icons': true}));
+}
 
 app.listen(3000, function () {
   console.log('Now accepting connections on port 3000.');
