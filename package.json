@@ -4,8 +4,8 @@
   "description": "Server for the IP project",
   "main": "index.js",
   "scripts": {
-    "pretest": "node index.js &",
-    "test": "sleep 2; jasmine-node --verbose --captureExceptions spec; node utils/flushdb.js",
+    "pretest": "node index.js > debug.log &",
+    "test": "sleep 2; jasmine; node utils/flushdb.js",
     "posttest": "killall node"
   },
   "repository": {
@@ -28,6 +28,6 @@
     "serve-index": "^1.7.3"
   },
   "devDependencies": {
-    "jasmine-node": "^1.14.5"
+    "jasmine": "^2.4.1"
   }
 }
