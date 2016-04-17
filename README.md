@@ -1,6 +1,6 @@
 # uni-society-manager [![travisbadge](https://travis-ci.org/Alpha-Atom/uni-society-manager.svg)](https://travis-ci.org/Alpha-Atom/uni-society-manager/builds) ![dankmeme](https://img.shields.io/badge/contains-dank%20memes-brightgreen.svg)
 
-Server for Integrated Project, powered by Express.js and Redis, listens for HTTPS requests on port 443 and HTTP requests on port 80 and port 3000. Certificate provided for free by the brilliant __[Lets Encrypt!](https://letsencrypt.org/)__ project. Unit tests are run on each commit with __[Travis CI](https://travis-ci.org/)__. Results of these tests can be viewed by clicking the build passing/failing badge.
+Server for Integrated Project, powered by Express.js and Redis, listens for HTTPS requests on port 443 and HTTP requests on port 80 and port 3000. Certificate provided for free by the brilliant __[Lets Encrypt!](https://letsencrypt.org/)__ project. Unit tests are run on each commit with __[Travis CI](https://travis-ci.org/)__. Results of these tests can be viewed by clicking the build passing/failing badge. Unit tests exist for each route with a :white_check_mark: by its name.
 
 ![HTTPS Screenshot](http://i.imgur.com/HUOTv2o.png "HTTPS Hello World")
 
@@ -10,12 +10,12 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
     * [Testing](#testing)
 * [API](#api)
     * __Misc__
-        * [/hello/:name/](#helloname)
+        * [/hello/:name/](#helloname) :white_check_mark:
     * __User__
-        * [/user/register/](#userregister)
-        * [/user/auth/](#userauth)
-        * [/user/view/](#userview)
-        * [/user/view/:user](#userviewuser)
+        * [/user/register/](#userregister) :white_check_mark:
+        * [/user/auth/](#userauth) :white_check_mark:
+        * [/user/view/](#userview) :white_check_mark:
+        * [/user/view/:user](#userviewuser) :white_check_mark:
     * __Society__
         * [/society/create/](#societycreate)
         * [/society/view/](#societyview)
