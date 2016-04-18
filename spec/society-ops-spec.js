@@ -293,4 +293,203 @@ describe("Society Operations", function () {
     });
   }); //end POST /society/leave/
 
+  describe("POST /society/promote/", function() {
+    it("rejects invalid admin auth key", function (done) {
+      request({
+        url: base_url + "/society/join/",
+        method: "POST",
+        json: {
+          society: "foo123soc",
+          auth: foo456auth
+        }
+      }, function (error, response, body) {
+        request({
+          url: base_url + "/society/promote/",
+          method: "POST",
+          json: {
+            user: "foo456",
+            society: "foo123soc",
+            auth: "nah"
+          }
+        }, function (error, response, body) {
+          expect(response.statusCode).toBe(200);
+          expect(body.success).toBe(0);
+          expect(body.error).toBe(1);
+          done();
+        });
+      });
+    });
+
+    it("successfully promotes a user", function (done) {
+      request({
+        url: base_url + "/society/promote/",
+        method: "POST",
+        json: {
+          user: "foo456",
+          society: "foo123soc",
+          auth: foo123auth
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(1);
+        expect(body.error).toBe(0);
+        done();
+      });
+    });
+
+    it("doesn't promote a user twice", function (done) {
+      request({
+        url: base_url + "/society/promote/",
+        method: "POST",
+        json: {
+          user: "foo456",
+          society: "foo123soc",
+          auth: foo123auth
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(3);
+        done();
+      });
+    });
+
+    it("doesn't promote users who aren't in the society", function (done) {
+      request({
+        url: base_url + "/society/promote/",
+        method: "POST",
+        json: {
+          user: "foo789",
+          society: "foo123soc",
+          auth: foo123auth
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(2);
+        done();
+      });
+    });
+
+    it("rejects malformed requests", function (done) {
+      request({
+        url: base_url + "/society/promote/",
+        method: "POST",
+        json: {
+          user: "foo456",
+          society: "foo123soc",
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(4);
+        done();
+      });
+    });
+  }); //end POST /society/promote/
+
+  describe("POST /society/kick/", function() {
+    it("rejects invalid admin auth key", function (done) {
+      request({
+        url: base_url + "/user/auth/",
+        method: "POST",
+        json: {
+          user: "foo789",
+          password: "foofoo"
+        }
+      }, function (error, response, body) {
+        foo789auth = body["auth-key"];
+        request({
+          url: base_url + "/society/join/",
+          method: "POST",
+          json: {
+            society: "foo123soc",
+            auth: foo789auth
+          }
+        }, function (error, response, body) {
+          request({
+            url: base_url + "/society/kick/",
+            method: "POST",
+            json: {
+              user: "foo789",
+              society: "foo123soc",
+              auth: "nah"
+            }
+          }, function (error, response, body) {
+            expect(response.statusCode).toBe(200);
+            expect(body.success).toBe(0);
+            expect(body.error).toBe(1);
+            done();
+          });
+        });
+      })
+    });
+
+    it("successfully kicks a user", function (done) {
+      request({
+        url: base_url + "/society/kick/",
+        method: "POST",
+        json: {
+          user: "foo789",
+          society: "foo123soc",
+          auth: foo123auth
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(1);
+        expect(body.error).toBe(0);
+        done();
+      });
+    });
+
+    it("doesn't kick a user twice", function (done) {
+      request({
+        url: base_url + "/society/kick/",
+        method: "POST",
+        json: {
+          user: "foo789",
+          society: "foo123soc",
+          auth: foo123auth
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(2);
+        done();
+      });
+    });
+
+    it("doesn't kick admins", function (done) {
+      request({
+        url: base_url + "/society/kick/",
+        method: "POST",
+        json: {
+          user: "foo456",
+          society: "foo123soc",
+          auth: foo123auth
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(3);
+        done();
+      });
+    });
+
+    it("rejects malformed requests", function (done) {
+      request({
+        url: base_url + "/society/kick/",
+        method: "POST",
+        json: {
+          user: "foo456",
+          society: "foo123soc",
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(4);
+        done();
+      });
+    });
+  }); //end POST /society/kick/
 });
