@@ -26,17 +26,17 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
         * [/society/promote/](#societypromote) :white_check_mark:
         * [/society/kick/](#societykick) :white_check_mark:
     * __Events__
-        * [/events/create/](#eventscreate)
-        * [/events/view/:eventid](#eventsvieweventid)
-        * [/events/pending/](#eventspending)
-        * [/events/accepted/](#eventsaccepted)
-        * [/events/declined/](#eventsdeclined)
-        * [/events/accept/:eventid](#eventsaccepteventid)
-        * [/events/decline/:eventid](#eventsdeclineeventid)
-        * [/events/cancel/:eventid](#eventscanceleventid)
+        * [/events/create/](#eventscreate) :white_check_mark:
+        * [/events/view/:eventid](#eventsvieweventid) :white_check_mark:
+        * [/events/pending/](#eventspending) :white_check_mark:
+        * [/events/accepted/](#eventsaccepted) :white_check_mark:
+        * [/events/declined/](#eventsdeclined) :white_check_mark:
+        * [/events/accept/:eventid](#eventsaccepteventid) :white_check_mark:
+        * [/events/decline/:eventid](#eventsdeclineeventid) :white_check_mark:
+        * [/events/cancel/:eventid](#eventscanceleventid) :white_check_mark:
     * __Friends__
-        * [/friends/add/](#friendsadd)
-        * [/friends/remove/](#friendsremove)
+        * [/friends/add/](#friendsadd) :white_check_mark:
+        * [/friends/remove/](#friendsremove) :white_check_mark:
 
 ### Installation
 Instructions are for OSX El Capitan at time of writing.
