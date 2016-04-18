@@ -15,7 +15,7 @@ var perform = function (req, res) {
     });
   } else {
     res.send({
-      "pending_events": [],
+      "accepted_events": [],
       "error": 2
     });
   }
