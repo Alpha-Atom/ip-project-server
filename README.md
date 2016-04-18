@@ -28,7 +28,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
     * __Events__
         * [/events/create/](#eventscreate) :white_check_mark:
         * [/events/view/:eventid](#eventsvieweventid) :white_check_mark:
-        * [/events/edit/:eventid](#eventsediteventid)
+        * [/events/edit/:eventid](#eventsediteventid) :white_check_mark:
         * [/events/pending/](#eventspending) :white_check_mark:
         * [/events/accepted/](#eventsaccepted) :white_check_mark:
         * [/events/declined/](#eventsdeclined) :white_check_mark:
