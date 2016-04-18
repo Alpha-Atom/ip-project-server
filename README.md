@@ -28,6 +28,7 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
     * __Events__
         * [/events/create/](#eventscreate) :white_check_mark:
         * [/events/view/:eventid](#eventsvieweventid) :white_check_mark:
+        * [/events/edit/:eventid](#eventsediteventid)
         * [/events/pending/](#eventspending) :white_check_mark:
         * [/events/accepted/](#eventsaccepted) :white_check_mark:
         * [/events/declined/](#eventsdeclined) :white_check_mark:
@@ -456,6 +457,30 @@ The response will then look like this:
 ```
 The error codes are as follows, `1` indicates that the event does not exist, and
 `2` indicates a malformed request.
+
+### /events/edit/:eventid
+To create a new event, a `PUT` request should be sent with the following data:
+```javascript
+{
+    "name": "Test Event",
+    "location": "Test Location",
+    "start": "1460552065702",
+    "end": "1460552065734",
+    "details": "Some details about the test event",
+    "auth": "$2a$10$qjkvbcPZ4YC7/a/I0ZpTaeJp6auXjGrG9pgAdI3PP61u4CftQPSL2"
+}
+```
+Note that the end time of the event must be greater than the start time and the
+start time must be greater than Date.now().
+```javascript
+{
+    "success": 1,
+    "error": 0
+}
+```
+The error codes are as follows, `1` indicates that the user is not an admin of the society,
+`2` indicates that the event could not be found, `3` indicates that the start
+or end times were in some way invalid and `4` indicates a malformed request.
 
 ### /events/pending/
 To get a users pending events, a `GET` request should be sent with the following
