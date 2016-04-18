@@ -166,6 +166,82 @@ describe("Society Operations", function () {
         done();
       });
     });
-  });
+  }); //end GET /society/view/:societyid/events
+
+  describe("POST /society/join/", function () {
+
+    it("successfully joins the society", function (done) {
+      request({
+        url: base_url + "/user/auth/",
+        method: "POST",
+        json: {
+          user: "foo456",
+          password: "foofoo"
+        }
+      }, function (error, response, body) {
+        foo456auth = body["auth-key"];
+        request({
+          url: base_url + "/society/join/",
+          method: "POST",
+          json: {
+            society: "foo123soc",
+            auth: foo456auth
+          }
+        }, function (error, response, body) {
+          expect(response.statusCode).toBe(200);
+          expect(body.success).toBe(1);
+          expect(body.error).toBe(0);
+          done();
+        });
+      });
+    });
+
+    it("doesn't join the society twice", function (done) {
+      request({
+        url: base_url + "/society/join/",
+        method: "POST",
+        json: {
+          society: "foo123soc",
+          auth: foo456auth
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(1);
+        done();
+      });
+    });
+
+    it("rejects invalid authentication keys", function (done) {
+      request({
+        url: base_url + "/society/join/",
+        method: "POST",
+        json: {
+          society: "foo123soc",
+          auth: "nah"
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(3);
+        done();
+      });
+    });
+
+    it("rejects malformed requests", function (done) {
+      request({
+        url: base_url + "/society/join/",
+        method: "POST",
+        json: {
+          society: "foo123soc",
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(2);
+        done();
+      });
+    });
+  }); //end POST /society/join/
 
 });
