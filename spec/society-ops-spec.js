@@ -121,4 +121,51 @@ describe("Society Operations", function () {
     });
   }); //end GET /society/view/:societyid
 
+  describe("GET /society/view/:societyid/events", function () {
+    it("shows events for an existing society", function (done) {
+      request({
+        url: base_url + "/society/view/foo123soc/events/",
+        method: "GET",
+        qs: {
+          auth: foo123auth
+        }
+      }, function (error, response, body) {
+        body = JSON.parse(body);
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(body.events)).toBe(true);
+        expect(body.error).toBe(0);
+        done();
+      });
+    });
+
+    it("rejects invalid authentication key", function (done) {
+      request({
+        url: base_url + "/society/view/foo123soc/events/",
+        method: "GET",
+        qs: {
+          auth: "foo"
+        }
+      }, function (error, response, body) {
+        body = JSON.parse(body);
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(body.events)).toBe(true);
+        expect(body.error).toBe(1);
+        done();
+      });
+    });
+
+    it("rejects malformed request", function (done) {
+      request({
+        url: base_url + "/society/view/foo123soc/events/",
+        method: "GET",
+      }, function (error, response, body) {
+        body = JSON.parse(body);
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(body.events)).toBe(true);
+        expect(body.error).toBe(2);
+        done();
+      });
+    });
+  });
+
 });
