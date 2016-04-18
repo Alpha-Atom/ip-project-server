@@ -205,6 +205,87 @@ describe("Events Operations", function () {
     });
   });
 
+  describe("PUT /events/edit/:eventid", function () {
+    it("can edit events", function (done) {
+      request({
+        url: base_url + "/events/edit/" + event_id,
+        method: "PUT",
+        json: {
+          auth: foo123auth,
+          name: "FooFooFoo"
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(1);
+        expect(body.error).toBe(0);
+        done();
+      });
+    });
+
+    it("rejects invalid auth keys", function (done) {
+      request({
+        url: base_url + "/events/edit/" + event_id,
+        method: "PUT",
+        json: {
+          auth: "nah",
+          name: "FooFooFoo"
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(1);
+        done();
+      });
+    });
+
+    it("rejects invalid dates", function (done) {
+      request({
+        url: base_url + "/events/edit/" + event_id,
+        method: "PUT",
+        json: {
+          auth: foo123auth,
+          start: 5
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(3);
+        done();
+      });
+    });
+
+    it("does not edit non existant events", function (done) {
+      request({
+        url: base_url + "/events/edit/nah",
+        method: "PUT",
+        json: {
+          auth: foo123auth,
+          name: "FooFooFoo"
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(2);
+        done();
+      });
+    });
+
+    it("rejects malformed requests", function (done) {
+      request({
+        url: base_url + "/events/edit/nah",
+        method: "PUT",
+        json: {
+          auth: foo123auth,
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(4);
+        done();
+      });
+    });
+  });
+
   describe("POST /events/accept/:eventid", function () {
     it("can accept events", function (done) {
       request({
