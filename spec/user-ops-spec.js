@@ -40,6 +40,9 @@ describe("User Operations", function () {
       });
     });
 
+    request(register_user("foo456"), function(){});
+    request(register_user("foo789"), function(){});
+
     it("cannot register the same user twice", function (done) {
       request(register_user("foo123"), function (error, response, body) {
         expect(response.statusCode).toBe(200);
