@@ -244,4 +244,53 @@ describe("Society Operations", function () {
     });
   }); //end POST /society/join/
 
+  describe("POST /society/leave/", function() {
+    it("correctly leaves the society", function (done) {
+      request({
+        url: base_url + "/society/leave/",
+        method: "POST",
+        json: {
+          society: "foo123soc",
+          auth: foo456auth
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(1);
+        expect(body.error).toBe(0);
+        done();
+      });
+    });
+
+    it("does not leave the society twice", function (done) {
+      request({
+        url: base_url + "/society/leave/",
+        method: "POST",
+        json: {
+          society: "foo123soc",
+          auth: foo456auth
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(1);
+        done();
+      });
+    });
+
+    it("rejects malformed requests", function (done) {
+      request({
+        url: base_url + "/society/leave/",
+        method: "POST",
+        json: {
+          society: "foo123soc",
+        }
+      }, function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(2);
+        done();
+      });
+    });
+  }); //end POST /society/leave/
+
 });
