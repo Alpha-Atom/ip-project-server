@@ -118,25 +118,32 @@ module.exports = {
         });
       } else {
         user_controller.get_user_from_auth(auth, function (username) {
-          user_query = "user:" + username;
-          redis.hget(user_query, "societies", function (err, result) {
-            if (result) {
-              result = JSON.parse(result);
-              redis.hset(user_query, "societies", JSON.stringify(result.concat(soc_name)));
-            } else {
-              redis.hset(user_query, "societies", JSON.stringify([soc_name]));
-            }
-          });
-          redis.hget(("society:" + soc_name).toLowerCase(), "users", function (err, users_result) {
-            users_result = JSON.parse(users_result);
-            redis.hset(("society:" + soc_name).toLowerCase(), "users", JSON.stringify(users_result.concat(username)));
-          });
-          var event_controller = require("./event-controller.js");
-          event_controller.invite_new_user(soc_name, username);
-        });
-        complete({
-          "success": 1,
-          "error": 0
+          if (username) {
+            user_query = "user:" + username;
+            redis.hget(user_query, "societies", function (err, result) {
+              if (result) {
+                result = JSON.parse(result);
+                redis.hset(user_query, "societies", JSON.stringify(result.concat(soc_name)));
+              } else {
+                redis.hset(user_query, "societies", JSON.stringify([soc_name]));
+              }
+            });
+            redis.hget(("society:" + soc_name).toLowerCase(), "users", function (err, users_result) {
+              users_result = JSON.parse(users_result);
+              redis.hset(("society:" + soc_name).toLowerCase(), "users", JSON.stringify(users_result.concat(username)));
+            });
+            var event_controller = require("./event-controller.js");
+            event_controller.invite_new_user(soc_name, username);
+            complete({
+              "success": 1,
+              "error": 0
+            });
+          } else {
+            complete({
+              "success": 0,
+              "error": 3
+            });
+          }
         });
       }
     });
