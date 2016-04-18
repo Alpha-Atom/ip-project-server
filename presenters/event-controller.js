@@ -101,10 +101,12 @@ module.exports = {
             if (details) {
               redis.hset("event:" + event_id, "details", details);
             }
-            complete({
-              "success": 1,
-              "error": 0
-            });
+            if (success) {
+              complete({
+                "success": 1,
+                "error": 0
+              });
+            }
           } else {
             complete({
               "success": 0,
