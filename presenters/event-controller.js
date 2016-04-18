@@ -49,14 +49,14 @@ module.exports = {
           } else {
             complete({
               "success": 0,
-              "error": 1
+              "error": 2
             })
           }
         });
       } else {
         complete({
           "success": 0,
-          "error": 2
+          "error": 1
         });
       }
     });
