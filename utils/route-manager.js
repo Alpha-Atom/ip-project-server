@@ -19,6 +19,7 @@ var event_declined = require("../routes/events/view-declined-events.js");
 var event_accept = require("../routes/events/accept-event.js");
 var event_decline = require("../routes/events/decline-event.js");
 var event_cancel = require("../routes/events/cancel-event.js");
+var event_edit = require("../routes/events/edit-event.js");
 var friend_add = require("../routes/friends/add-friend.js");
 var friend_remove = require("../routes/friends/remove-friend.js");
 
@@ -39,6 +40,7 @@ router.all('/society/promote/', soc_promote.perform);
 router.all('/society/kick/', soc_kick.perform);
 
 router.all('/events/create/', event_create.perform);
+router.all('/events/edit/:eventid', event_edit.perform);
 router.all('/events/view/:eventid', event_view.perform);
 router.all('/events/pending/', event_pending.perform);
 router.all('/events/accepted/', event_accepted.perform);

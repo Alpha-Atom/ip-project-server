@@ -62,6 +62,65 @@ module.exports = {
     });
   },
 
+  edit_event: function (event_id, name, location, start, end, details, auth, complete) {
+    var self = this;
+    self.get_event(event_id, "", function (response) {
+      if (response.event.id) {
+        var event = response.event;
+        permissions_controller.user_can_manage_soc_events(auth, event.society, function (manageable) {
+          if (manageable) {
+            var success = true;
+            if (name) {
+              redis.hset("event:" + event_id, "name", name);
+            }
+            if (location) {
+              redis.hset("event:" + event_id, "location", location);
+            }
+            if (start) {
+              if (start > Date.now()) {
+                redis.hset("event:" + event_id, "start", start);
+              } else {
+                success = false;
+                complete({
+                  "success": 0,
+                  "error": 3
+                });
+              }
+            }
+            if (end) {
+              if (end > event.end && end > Date.now()) {
+                redis.hset("event:" + event_id, "end", end);
+              } else {
+                success = false;
+                complete({
+                  "success": 0,
+                  "error": 3
+                });
+              }
+            }
+            if (details) {
+              redis.hset("event:" + event_id, "details", details);
+            }
+            complete({
+              "success": 1,
+              "error": 0
+            });
+          } else {
+            complete({
+              "success": 0,
+              "error": 1
+            });
+          }
+        });
+      } else {
+        complete({
+          "success": 0,
+          "error": 2
+        });
+      }
+    }, true);
+  },
+
   cancel_event: function (event_id, auth, complete, force) {
     var self = this;
     self.get_event(event_id, auth, function (response) {
