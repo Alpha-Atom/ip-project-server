@@ -65,7 +65,7 @@ module.exports = {
   cancel_event: function (event_id, auth, complete, force) {
     var self = this;
     self.get_event(event_id, auth, function (response) {
-      if (response) {
+      if (response.event.id) {
         var event = response.event;
         permissions_controller.user_can_manage_soc_events(auth, event.society, function (manageable) {
           if (manageable || force) {
@@ -112,14 +112,14 @@ module.exports = {
           } else {
             complete({
               "success": 0,
-              "error": 2
+              "error": 1
             });
           }
         });
       } else {
         complete({
           "success": 0,
-          "error": 1
+          "error": 2
         });
       }
     }, force);
