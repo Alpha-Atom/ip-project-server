@@ -200,7 +200,14 @@ module.exports = {
                   "error": 3
                 });
               } else {
-                self.leave_society(soc_name, result["auth-key"], complete);
+                self.leave_society(soc_name, result["auth-key"], function (response) {
+                  if (response.error === 1) {
+                    response.error = 2;
+                    complete(response);
+                  } else {
+                    complete(response);
+                  }
+                });
               }
             });
           } else {
