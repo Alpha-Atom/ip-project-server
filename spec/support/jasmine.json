@@ -3,6 +3,8 @@
     "spec_files": [
         "misc-ops-spec.js",
         "user-ops-spec.js",
-        "society-ops-spec.js"
+        "society-ops-spec.js",
+        "events-ops-spec.js",
+        "friends-ops-spec.js"
     ]
 }
