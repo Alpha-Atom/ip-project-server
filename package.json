@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "node index.js > debug.log &",
-    "test": "sleep 2; jasmine; node utils/flushdb.js",
+    "test": "sleep 2; node jasmine-runner.js; node utils/flushdb.js",
     "posttest": "killall node"
   },
   "repository": {
@@ -28,6 +28,7 @@
     "serve-index": "^1.7.3"
   },
   "devDependencies": {
-    "jasmine": "^2.4.1"
+    "jasmine": "^2.4.1",
+    "jasmine-spec-reporter": "^2.4.0"
   }
 }
