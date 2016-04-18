@@ -196,6 +196,12 @@ module.exports = {
               }
             }, true);
           }
+          if (event_objs.length === 0) {
+            complete({
+              "events": event_objs,
+              "error": 0
+            });
+          }
         });
       } else {
         complete({
