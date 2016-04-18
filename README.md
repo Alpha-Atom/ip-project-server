@@ -23,8 +23,8 @@ Server for Integrated Project, powered by Express.js and Redis, listens for HTTP
         * [/society/view/:society\_name/events](#societyviewsociety_nameevents) :white_check_mark:
         * [/society/join/](#societyjoin) :white_check_mark:
         * [/society/leave/](#societyleave) :white_check_mark:
-        * [/society/promote/](#societypromote)
-        * [/society/kick/](#societykick)
+        * [/society/promote/](#societypromote) :white_check_mark:
+        * [/society/kick/](#societykick) :white_check_mark:
     * __Events__
         * [/events/create/](#eventscreate)
         * [/events/view/:eventid](#eventsvieweventid)
