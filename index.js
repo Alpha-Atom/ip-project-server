@@ -11,12 +11,13 @@ var morgan = require('morgan');
 var fs = require('fs');
 var logDirectory = 'log'
 var production = process.argv[2];
+/* istanbul ignore if */
 if (production === "-p") {
   var log_passwd = fs.readFileSync('logpasswd', 'utf-8');
 }
 
 scheduler.register_existing_events();
-
+/* istanbul ignore next */
 var auth = function (req, res, next) {
   function unauthorized(res) {
     res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
@@ -61,6 +62,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use('/', route_manager);
 app.use('/source', require('magic-window')('/source', { ignore: ['config', 'redis', 'cert.pem', 'key.pem', 'dump.rdb', 'logpasswd'] }))
+/* istanbul ignore if */
 if (production === "-p") {
   app.use('/log', auth, express.static('log'));
   app.use('/log', auth, serveIndex('log', {'icons': true}));
@@ -70,6 +72,7 @@ app.listen(3000, function () {
   console.log('Now accepting connections on port 3000.');
 });
 
+/* istanbul ignore if */
 if (production === "-p") {
   var prkey = fs.readFileSync('key.pem');
   var certi = fs.readFileSync('cert.pem');

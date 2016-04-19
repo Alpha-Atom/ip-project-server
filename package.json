@@ -4,9 +4,9 @@
   "description": "Server for the IP project",
   "main": "index.js",
   "scripts": {
-    "pretest": "node index.js > debug.log &",
+    "pretest": "istanbul cover index.js > debug.log &",
     "test": "sleep 2; node jasmine-runner.js; node utils/flushdb.js",
-    "posttest": "killall node"
+    "posttest": "killall -2 node && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,8 @@
     "serve-index": "^1.7.3"
   },
   "devDependencies": {
+    "coveralls": "^2.11.9",
+    "istanbul": "^0.4.3",
     "jasmine": "^2.4.1",
     "jasmine-spec-reporter": "^2.4.0"
   }

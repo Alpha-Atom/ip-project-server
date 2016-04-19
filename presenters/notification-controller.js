@@ -1,3 +1,4 @@
+ /* istanbul ignore next */
 module.exports = {
 
   send_notifications_for: function (event_id) {
