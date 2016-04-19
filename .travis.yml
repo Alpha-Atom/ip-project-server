@@ -4,4 +4,4 @@ node_js:
 services:
   - redis-server
 after_script:
-  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+  - cat /home/travis/build/Alpha-Atom/uni-society-manager/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf /home/travis/build/Alpha-Atom/uni-society-manager/coverage/
