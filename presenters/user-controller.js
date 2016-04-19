@@ -193,7 +193,7 @@ module.exports = {
     friend = friend.toLowerCase();
     self.get_user_from_auth(auth, function (username) {
       if (username) {
-        if (username.toLowerCase() === friend.toLowerCase()) {
+        if (username.toLowerCase() !== friend.toLowerCase()) {
         self.get_public_user_info(username, function (userdata) {
           var friends = userdata.user.friends;
           if (friends.indexOf(friend) > -1) {
