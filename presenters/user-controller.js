@@ -193,6 +193,7 @@ module.exports = {
     friend = friend.toLowerCase();
     self.get_user_from_auth(auth, function (username) {
       if (username) {
+        if (username.toLowerCase() === friend.toLowerCase()) {
         self.get_public_user_info(username, function (userdata) {
           var friends = userdata.user.friends;
           if (friends.indexOf(friend) > -1) {
@@ -218,6 +219,12 @@ module.exports = {
             });
           }
         });
+        } else {
+          complete({
+            "success": 0,
+            "error": 4
+          });
+        }
       } else {
         complete({
           "success": 0,
