@@ -73,6 +73,15 @@ describe("Friends Operations", function () {
       });
     });
 
+    it("rejects if you add yourself :(", function (done) {
+      request(friend(true, "foo123", foo123auth), function (error, response, body) {
+        expect(response.statusCode).toBe(200);
+        expect(body.success).toBe(0);
+        expect(body.error).toBe(4);
+        done();
+      });
+    });
+
     it("reject malformed requests", function (done) {
       request({
         url: base_url + "/friends/add/",
@@ -83,7 +92,7 @@ describe("Friends Operations", function () {
       }, function (error, response, body) {
         expect(response.statusCode).toBe(200);
         expect(body.success).toBe(0);
-        expect(body.error).toBe(4);
+        expect(body.error).toBe(5);
         done();
       });
     });
