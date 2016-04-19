@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "istanbul cover index.js > debug.log &",
     "test": "sleep 2; node jasmine-runner.js; node utils/flushdb.js",
-    "posttest": "killall -2 node && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "posttest": "killall -2 node"
   },
   "repository": {
     "type": "git",
