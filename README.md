@@ -459,7 +459,8 @@ The error codes are as follows, `1` indicates that the event does not exist, and
 `2` indicates a malformed request.
 
 ### /events/edit/:eventid
-To create a new event, a `PUT` request should be sent with the following data:
+To create a new event, a `PUT` request should be sent with the following data -
+all fields except auth are optional:
 ```javascript
 {
     "name": "Test Event",
