@@ -260,7 +260,7 @@ module.exports = {
               }
             }, true);
           }
-          if (event_objs.length === 0) {
+          if (event.length === 0) {
             complete({
               "events": event_objs,
               "error": 0
