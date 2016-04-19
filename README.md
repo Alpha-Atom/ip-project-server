@@ -695,7 +695,8 @@ The response will then look like this:
 ```
 The error codes are as follows, `1` indicates an invalid auth code, `2`
 indicates that the user is already a friend, `3` indicates that the user you are
-trying to add does not exist and `4` indicates a malformed request.
+trying to add does not exist, `4` indicates that you are trying to add yourself
+and `5` indicates a malformed request.
 
 ### /friends/remove/
 To remove a friend from the friends list, a `POST` request should be sent with
