@@ -1,5 +1,6 @@
 var request = require("request");
 var base_url = "http://localhost:3000";
+var server = require("../index.js");
 
 describe("Friends Operations", function () {
 
@@ -137,6 +138,7 @@ describe("Friends Operations", function () {
         expect(response.statusCode).toBe(200);
         expect(body.success).toBe(0);
         expect(body.error).toBe(3);
+        server.close();
         done();
       });
     });

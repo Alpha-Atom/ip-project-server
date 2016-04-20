@@ -32,9 +32,7 @@ describe("User Operations", function () {
       request(register_user("foo123"), function (error, response, body) {
         expect(response.statusCode).toBe(200);
         expect(body.registered).toBe(1);
-        if (body["auth-key"]) {
-          expect(body["auth-key"].length).toBe(60);
-        }
+        expect(body["auth-key"].length).toBe(60);
         expect(body.error).toBe(0);
         done();
       });

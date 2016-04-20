@@ -37,20 +37,23 @@ var auth = function (req, res, next) {
   };
 };
 
-// ensure log directory exists
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+/*istanbul ignore if*/
+if (production === "-p") {
+  // ensure log directory exists
+  fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
 
-// create a rotating write stream
-var accessLogStream = FileStreamRotator.getStream({
-  date_format: 'YYYYMMDD',
-  filename: logDirectory + '/access-%DATE%.log',
-  frequency: 'daily',
-  verbose: false
-})
+  // create a rotating write stream
+  var accessLogStream = FileStreamRotator.getStream({
+    date_format: 'YYYYMMDD',
+    filename: logDirectory + '/access-%DATE%.log',
+    frequency: 'daily',
+    verbose: false
+  })
 
-// setup the logger
-app.use(morgan('short', {stream: accessLogStream}))
-app.use(morgan('short'));
+  // setup the logger
+  app.use(morgan('short', {stream: accessLogStream}))
+  app.use(morgan('short'));
+}
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -68,7 +71,7 @@ if (production === "-p") {
   app.use('/log', auth, serveIndex('log', {'icons': true}));
 }
 
-app.listen(3000, function () {
+var server = app.listen(3000, function () {
   console.log('Now accepting connections on port 3000.');
 });
 
@@ -92,4 +95,10 @@ if (production === "-p") {
 process.on('SIGINT', function() {
   console.log( "\nRecieved Ctrl-C, shutting down." );
   process.exit(0);
-})
+});
+
+module.exports = {
+  close: function () {
+    server.close();
+  }
+};

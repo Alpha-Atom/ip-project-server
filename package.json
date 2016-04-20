@@ -4,9 +4,7 @@
   "description": "Server for the IP project",
   "main": "index.js",
   "scripts": {
-    "pretest": "istanbul cover index.js > debug.log &",
-    "test": "sleep 2; node jasmine-runner.js; node utils/flushdb.js",
-    "posttest": "killall -2 node"
+    "test": "istanbul cover jasmine-runner.js && node utils/flushdb.js"
   },
   "repository": {
     "type": "git",
