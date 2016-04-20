@@ -37,10 +37,6 @@ module.exports = {
         return;
       }
       society_controller.get_admin_list(society, function (adminlist) {
-        if (!adminlist[0]) {
-          complete(false);
-          return;
-        }
         complete((adminlist.indexOf(username) !== -1));
       });
     });

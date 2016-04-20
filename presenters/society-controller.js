@@ -60,8 +60,6 @@ module.exports = {
                       if (result) {
                         result = JSON.parse(result);
                         redis.hset("user:" + admin_name, "societies", JSON.stringify(result.concat(society_name.toLowerCase())));
-                      } else {
-                        redis.hset("user:" + admin_name, "societies", JSON.stringify([society_name.toLowerCase()]));
                       }
                     });
                   });
@@ -124,8 +122,6 @@ module.exports = {
               if (result) {
                 result = JSON.parse(result);
                 redis.hset(user_query, "societies", JSON.stringify(result.concat(soc_name)));
-              } else {
-                redis.hset(user_query, "societies", JSON.stringify([soc_name]));
               }
             });
             redis.hget(("society:" + soc_name).toLowerCase(), "users", function (err, users_result) {
