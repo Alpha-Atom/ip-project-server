@@ -92,6 +92,7 @@ if (production === "-p") {
   });
 }
 
+/* istanbul ignore next */
 process.on('SIGINT', function() {
   console.log( "\nRecieved Ctrl-C, shutting down." );
   process.exit(0);

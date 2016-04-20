@@ -10,10 +10,6 @@ module.exports = {
     })
   },
 
-  user_can_view_society: function (auth, complete) {
-    complete(true);
-  },
-
   user_is_in_society: function (auth, society, complete) {
     var user_controller = require("./user-controller.js");
     var society_controller = require("./society-controller.js");
